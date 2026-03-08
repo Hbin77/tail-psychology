@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  # PostgreSQL
+  db:
+    image: postgres:16-alpine
+    container_name: tailpsych-db
+    restart: always
+    environment:
+      POSTGRES_DB: tail_psychology
+      POSTGRES_USER: tailuser
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tailuser -d tail_psychology"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # FastAPI 백엔드
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: tailpsych-api
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://tailuser:${DB_PASSWORD:-changeme}@db:5432/tail_psychology
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+      ENVIRONMENT: prod
+    ports:
+      - "8000:8000"
+
+  # Next.js 프론트엔드
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: tailpsych-web
+    restart: always
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API_URL: ""
+    ports:
+      - "3000:3000"
+
+  # Nginx 리버스 프록시
+  nginx:
+    image: nginx:alpine
+    container_name: tailpsych-nginx
+    restart: always
+    depends_on:
+      - web
+      - api
+    ports:
+      - "8089:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+volumes:
+  pgdata:
