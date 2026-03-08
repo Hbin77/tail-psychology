@@ -32,7 +32,7 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql+asyncpg://tailuser:${DB_PASSWORD:-changeme}@db:5432/tail_psychology
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
       ENVIRONMENT: prod
     ports:

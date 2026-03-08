@@ -8,6 +8,6 @@ pydantic==2.9.0
 pydantic-settings==2.5.0
 python-dotenv==1.0.1
 httpx==0.27.0
-anthropic==0.37.0
+# openai는 httpx로 직접 호출 (추가 패키지 불필요)
 nanoid==2.0.0
 python-multipart==0.0.9

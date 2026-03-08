@@ -47,14 +47,14 @@ async def run_diagnosis(session_id: UUID, db: AsyncSession) -> DiagnosisResult:
     combined_free_text = "\n".join(free_texts)
 
     final_scores = dict(base_scores)
-    llm_model = "claude-sonnet-4-20250514"
+    llm_model = "gpt-4o-mini"
 
     if combined_free_text:
         adjustments = await adjust_scores(
             base_scores, combined_free_text, session.pet_name, session.pet_category
         )
         if adjustments:
-            llm_model = "claude-3-5-haiku-latest + claude-sonnet-4-20250514"
+            llm_model = "gpt-4o-mini"
             for axis in final_scores:
                 final_scores[axis] = max(
                     -1.0, min(1.0, final_scores[axis] + adjustments.get(axis, 0.0))
