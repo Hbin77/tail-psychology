@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter, useParams } from 'next/navigation';
 import { useTestStore } from '@/stores/useTestStore';
+import { CheckCircle2, Circle, Loader2, PawPrint } from 'lucide-react';
 
 const steps = [
   { text: '행동 패턴 분석', delay: 800 },
@@ -21,14 +22,12 @@ export default function LoadingPage() {
   const isDog = type === 'dog';
 
   useEffect(() => {
-    // 단계별 체크 애니메이션
     steps.forEach((step, idx) => {
       setTimeout(() => {
         setCompletedSteps((prev) => [...prev, idx]);
       }, step.delay);
     });
 
-    // 최소 3초 후 결과 페이지로 이동
     const timer = setTimeout(() => {
       if (shareToken) {
         router.replace(`/result/${shareToken}`);
@@ -41,26 +40,26 @@ export default function LoadingPage() {
   }, [router, shareToken]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen bg-[#FAFAF8] flex flex-col items-center justify-center px-6">
       <div className="max-w-md mx-auto w-full flex flex-col items-center gap-8">
-        {/* 꼬리 흔드는 애니메이션 */}
         <motion.div
-          animate={{ rotate: [0, 30, -30, 30, 0] }}
-          transition={{ duration: 1, repeat: Infinity }}
-          className="text-8xl"
+          animate={{ rotate: [0, 15, -15, 15, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
         >
-          {isDog ? '🐶' : '🐱'}
+          <PawPrint
+            className={`w-20 h-20 ${isDog ? 'text-[#C4824E]' : 'text-[#7C6B9E]'}`}
+            strokeWidth={1.5}
+          />
         </motion.div>
 
         <motion.h2
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-xl font-bold text-gray-800"
+          className="text-xl font-bold text-[#1A1A1A]"
         >
-          꼬리 심리 분석 중... 🔬
+          꼬리 심리 분석 중...
         </motion.h2>
 
-        {/* 단계별 체크리스트 */}
         <div className="w-full flex flex-col gap-4">
           {steps.map((step, idx) => {
             const isCompleted = completedSteps.includes(idx);
@@ -74,12 +73,16 @@ export default function LoadingPage() {
                 transition={{ delay: idx * 0.3 }}
                 className="flex items-center gap-3 px-4"
               >
-                <span className="text-xl">
-                  {isCompleted ? '✅' : isActive ? '⏳' : '⬜'}
-                </span>
+                {isCompleted ? (
+                  <CheckCircle2 className={`w-5 h-5 ${isDog ? 'text-[#C4824E]' : 'text-[#7C6B9E]'}`} />
+                ) : isActive ? (
+                  <Loader2 className={`w-5 h-5 animate-spin ${isDog ? 'text-[#C4824E]' : 'text-[#7C6B9E]'}`} />
+                ) : (
+                  <Circle className="w-5 h-5 text-[#9CA3AF]" />
+                )}
                 <span
                   className={`text-base font-medium ${
-                    isCompleted ? 'text-gray-800' : 'text-gray-400'
+                    isCompleted ? 'text-[#1A1A1A]' : 'text-[#9CA3AF]'
                   }`}
                 >
                   {step.text}
@@ -89,10 +92,9 @@ export default function LoadingPage() {
           })}
         </div>
 
-        {/* 로딩 바 */}
         <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
           <motion.div
-            className={`h-full rounded-full ${isDog ? 'bg-amber-500' : 'bg-purple-500'}`}
+            className={`h-full rounded-full ${isDog ? 'bg-[#C4824E]' : 'bg-[#7C6B9E]'}`}
             initial={{ width: '0%' }}
             animate={{ width: '100%' }}
             transition={{ duration: 3.5, ease: 'easeInOut' }}

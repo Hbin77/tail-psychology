@@ -56,17 +56,19 @@ async def adjust_scores(
 - 종류: {"강아지" if pet_category == "dog" else "고양이"}
 
 현재 축별 기본 점수 (-1 ~ +1):
-- energy (활동성): {base_scores['energy']:.2f}
-- social (사회성): {base_scores['social']:.2f}
-- sensitivity (감수성): {base_scores['sensitivity']:.2f}
-- curiosity (호기심): {base_scores['curiosity']:.2f}
+- extraversion (외향성): {base_scores.get('extraversion', 0):.2f}
+- amicability (친화성): {base_scores.get('amicability', 0):.2f}
+- neuroticism (신경성): {base_scores.get('neuroticism', 0):.2f}
+- trainability (훈련성): {base_scores.get('trainability', 0):.2f}
+- dominance (지배성): {base_scores.get('dominance', 0):.2f}
 
 보호자의 자유 서술:
 "{free_text}"
 
 위 자유 서술을 분석하여 각 축에 대한 보정값을 -0.2에서 +0.2 사이로 제시해주세요.
+해당 반려동물에 해당하는 축만 포함하세요 (강아지: extraversion, amicability, neuroticism, trainability / 고양이: extraversion, amicability, neuroticism, dominance).
 반드시 아래 JSON 형식으로만 응답하세요:
-{{"energy": 0.0, "social": 0.0, "sensitivity": 0.0, "curiosity": 0.0}}"""
+{{"extraversion": 0.0, "amicability": 0.0, "neuroticism": 0.0, "trainability": 0.0}}"""
 
     try:
         text = await _call_openai(
@@ -76,7 +78,7 @@ async def adjust_scores(
         if not text:
             return None
         adjustments = _extract_json(text)
-        for axis in ["energy", "social", "sensitivity", "curiosity"]:
+        for axis in ["extraversion", "amicability", "neuroticism", "trainability", "dominance"]:
             val = float(adjustments.get(axis, 0.0))
             adjustments[axis] = max(-0.2, min(0.2, val))
         return adjustments
@@ -101,16 +103,17 @@ async def generate_result_text(
 - 캐릭터 이름: {character_name}
 
 축별 점수 (-1 ~ +1):
-- energy (활동성): {axis_scores['energy']:.2f}
-- social (사회성): {axis_scores['social']:.2f}
-- sensitivity (감수성): {axis_scores['sensitivity']:.2f}
-- curiosity (호기심): {axis_scores['curiosity']:.2f}
+- extraversion (외향성): {axis_scores.get('extraversion', 0):.2f}
+- amicability (친화성): {axis_scores.get('amicability', 0):.2f}
+- neuroticism (신경성): {axis_scores.get('neuroticism', 0):.2f}
+- trainability (훈련성): {axis_scores.get('trainability', 0):.2f}
+- dominance (지배성): {axis_scores.get('dominance', 0):.2f}
 
 응답 요약:
 {response_summary}
 
 다음 두 가지를 작성해주세요:
-1. description: {pet_name}의 성격을 3-4문단으로 따뜻하고 재미있게 설명 (반말 톤, 이모지 적절히)
+1. description: {pet_name}의 성격을 3-4문단으로 따뜻하고 전문적으로 설명 (존댓말 톤, 이모지 사용 금지)
 2. compatibility: 이 유형과 잘 맞는 보호자 유형, 함께하면 좋은 활동 등을 2-3문단으로 설명
 
 반드시 아래 JSON 형식으로만 응답하세요:

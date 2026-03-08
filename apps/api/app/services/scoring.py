@@ -9,16 +9,18 @@ def calculate_base_scores(
     question_map = {str(q.id): q for q in questions}
 
     axis_totals: dict[str, float] = {
-        "energy": 0.0,
-        "social": 0.0,
-        "sensitivity": 0.0,
-        "curiosity": 0.0,
+        "extraversion": 0.0,
+        "amicability": 0.0,
+        "neuroticism": 0.0,
+        "trainability": 0.0,
+        "dominance": 0.0,
     }
     axis_counts: dict[str, int] = {
-        "energy": 0,
-        "social": 0,
-        "sensitivity": 0,
-        "curiosity": 0,
+        "extraversion": 0,
+        "amicability": 0,
+        "neuroticism": 0,
+        "trainability": 0,
+        "dominance": 0,
     }
 
     for resp in responses:
@@ -26,7 +28,7 @@ def calculate_base_scores(
         if not question or question.question_type == "free_text":
             continue
 
-        # choices 구조: [{"id": "a", "text": "...", "axisWeights": {"energy": 2, ...}}, ...]
+        # choices 구조: [{"id": "a", "text": "...", "axisWeights": {"extraversion": 2, ...}}, ...]
         if question.choices and resp.choice_id:
             for choice in question.choices:
                 if choice.get("id") == resp.choice_id:
@@ -55,8 +57,20 @@ def calculate_base_scores(
 def determine_type_code(scores: dict[str, float]) -> str:
     """4축 점수로 유형 코드를 결정한다."""
     code = ""
-    code += "A" if scores.get("energy", 0) >= 0 else "C"
-    code += "S" if scores.get("social", 0) >= 0 else "M"
-    code += "D" if scores.get("sensitivity", 0) >= 0 else "B"
-    code += "E" if scores.get("curiosity", 0) >= 0 else "H"
+    code += "E" if scores.get("extraversion", 0) >= 0 else "I"
+    code += "A" if scores.get("amicability", 0) >= 0 else "R"
+    code += "S" if scores.get("neuroticism", 0) >= 0 else "C"
+
+    # 4th axis: trainability (dogs) or dominance (cats)
+    trainability = scores.get("trainability", 0)
+    dominance = scores.get("dominance", 0)
+
+    if trainability != 0:
+        code += "T" if trainability >= 0 else "F"
+    elif dominance != 0:
+        code += "D" if dominance >= 0 else "P"
+    else:
+        # fallback: neither axis has data, default to trainability logic
+        code += "T"
+
     return code

@@ -5,10 +5,11 @@ from pydantic import BaseModel
 
 
 class AxisScores(BaseModel):
-    energy: float
-    social: float
-    sensitivity: float
-    curiosity: float
+    extraversion: float = 0.0
+    amicability: float = 0.0
+    neuroticism: float = 0.0
+    trainability: float = 0.0
+    dominance: float = 0.0
 
 
 class DiagnosisResult(BaseModel):

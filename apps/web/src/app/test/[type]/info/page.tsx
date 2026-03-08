@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { useRouter, useParams } from 'next/navigation';
 import { useTestStore } from '@/stores/useTestStore';
 import { createSession } from '@/lib/api';
+import { PawPrint } from 'lucide-react';
 
 export default function InfoPage() {
   const router = useRouter();
@@ -15,8 +16,6 @@ export default function InfoPage() {
   const [loading, setLoading] = useState(false);
 
   const isDog = type === 'dog';
-  const emoji = isDog ? '🐶' : '🐱';
-  const accentColor = isDog ? 'amber' : 'purple';
 
   const handleNext = async () => {
     if (!name.trim() || loading) return;
@@ -27,7 +26,6 @@ export default function InfoPage() {
       const session = await createSession(type, name.trim());
       setSessionId(session.session_id);
     } catch {
-      // MVP: API 실패해도 진행 (오프라인 모드)
       setSessionId('offline-' + Date.now());
     }
 
@@ -35,25 +33,27 @@ export default function InfoPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen bg-[#FAFAF8] flex flex-col items-center justify-center px-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-md mx-auto w-full flex flex-col items-center gap-6"
       >
         <motion.div
-          animate={{ scale: [1, 1.1, 1] }}
+          animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="text-7xl"
         >
-          {emoji}
+          <PawPrint
+            className={`w-16 h-16 ${isDog ? 'text-[#C4824E]' : 'text-[#7C6B9E]'}`}
+            strokeWidth={1.5}
+          />
         </motion.div>
 
-        <h1 className={`text-2xl font-bold text-${accentColor}-900`}>
+        <h1 className="text-2xl font-bold text-[#1A1A1A]">
           이름을 알려주세요
         </h1>
 
-        <p className={`text-sm text-${accentColor}-600`}>
+        <p className="text-sm text-[#6B7280]">
           {isDog ? '우리 강아지' : '우리 고양이'}의 이름은 무엇인가요?
         </p>
 
@@ -64,7 +64,9 @@ export default function InfoPage() {
           onKeyDown={(e) => e.key === 'Enter' && handleNext()}
           placeholder="예: 초코"
           maxLength={20}
-          className={`w-full h-14 px-6 text-lg text-center bg-white rounded-2xl border-2 border-${accentColor}-200 focus:border-${accentColor}-400 focus:outline-none shadow-sm placeholder:text-gray-300`}
+          className={`w-full h-14 px-6 text-lg text-center bg-white rounded-xl border ${
+            isDog ? 'border-[#E8D5C4] focus:border-[#C4824E]' : 'border-[#D4C8E8] focus:border-[#7C6B9E]'
+          } focus:outline-none shadow-sm placeholder:text-[#9CA3AF]`}
           autoFocus
         />
 
@@ -73,10 +75,10 @@ export default function InfoPage() {
           whileTap={{ scale: 0.97 }}
           onClick={handleNext}
           disabled={!name.trim() || loading}
-          className={`w-full h-14 text-white text-lg font-bold rounded-2xl shadow-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+          className={`w-full h-14 text-white text-lg font-bold rounded-xl shadow-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
             isDog
-              ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/30'
-              : 'bg-purple-500 hover:bg-purple-600 shadow-purple-500/30'
+              ? 'bg-[#C4824E] hover:bg-[#B3743F]'
+              : 'bg-[#7C6B9E] hover:bg-[#6B5A8D]'
           }`}
         >
           {loading ? '준비 중...' : '다음'}

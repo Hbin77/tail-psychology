@@ -9,6 +9,7 @@ import 'swiper/css';
 import { useTestStore } from '@/stores/useTestStore';
 import { DOG_QUESTIONS, CAT_QUESTIONS } from '@/data/questions';
 import { submitResponses, runDiagnosis } from '@/lib/api';
+import { ChevronLeft, Send } from 'lucide-react';
 
 export default function QuestionsPage() {
   const router = useRouter();
@@ -34,7 +35,6 @@ export default function QuestionsPage() {
 
   const handleChoiceSelect = useCallback((questionId: string, choiceId: string) => {
     setAnswer(questionId, choiceId);
-    // 0.5초 후 자동 다음 슬라이드
     setTimeout(() => {
       if (swiperRef.current && activeIndex < totalQuestions - 1) {
         swiperRef.current.slideNext();
@@ -47,7 +47,6 @@ export default function QuestionsPage() {
     setSubmitting(true);
 
     try {
-      // 응답 데이터 구성
       const responses = questions.map((q) => {
         if (q.questionType === 'free_text') {
           return { question_id: q.id, free_text: freeTextAnswers[q.id] || '' };
@@ -60,13 +59,11 @@ export default function QuestionsPage() {
         const result = await runDiagnosis(sessionId);
         setShareToken(result.share_token);
       } else {
-        // 오프라인 모드 - 임시 토큰
         setShareToken('demo-' + Date.now());
       }
 
       router.push(`/test/${type}/loading`);
     } catch {
-      // 에러 시에도 로딩 페이지로 이동
       setShareToken('demo-' + Date.now());
       router.push(`/test/${type}/loading`);
     }
@@ -80,44 +77,39 @@ export default function QuestionsPage() {
     }
   };
 
-  // 선택지 완료 체크 (자유입력 제외)
   const choiceQuestions = questions.filter((q) => q.questionType === 'choice');
   const answeredCount = choiceQuestions.filter((q) => answers[q.id]).length;
   const allChoicesAnswered = answeredCount === choiceQuestions.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col">
-      {/* 상단 헤더 */}
+    <div className="min-h-screen bg-[#FAFAF8] flex flex-col">
       <div className="max-w-md mx-auto w-full px-4 pt-4 pb-2">
         <div className="flex items-center justify-between mb-3">
           <button
             onClick={handleBack}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/80 shadow-sm text-lg"
+            className="w-10 h-10 flex items-center justify-center rounded-xl bg-white shadow-sm border border-gray-100"
           >
-            ←
+            <ChevronLeft className="w-5 h-5 text-[#6B7280]" />
           </button>
-          <span className={`text-sm font-bold ${isDog ? 'text-amber-700' : 'text-purple-700'}`}>
+          <span className={`text-sm font-bold ${isDog ? 'text-[#C4824E]' : 'text-[#7C6B9E]'}`}>
             Q{activeIndex + 1}/{totalQuestions}
           </span>
-          <div className="w-10" /> {/* spacer */}
+          <div className="w-10" />
         </div>
 
-        {/* 프로그레스바 */}
         <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
           <motion.div
-            className={`h-full rounded-full ${isDog ? 'bg-amber-500' : 'bg-purple-500'}`}
+            className={`h-full rounded-full ${isDog ? 'bg-[#C4824E]' : 'bg-[#7C6B9E]'}`}
             animate={{ width: `${((activeIndex + 1) / totalQuestions) * 100}%` }}
             transition={{ duration: 0.3 }}
           />
         </div>
 
-        {/* 이름 표시 */}
-        <p className="text-center text-xs text-gray-400 mt-2">
+        <p className="text-center text-xs text-[#9CA3AF] mt-2">
           {petName ? `${petName}의 성격 검사` : '성격 검사'}
         </p>
       </div>
 
-      {/* Swiper 질문 카드 */}
       <div className="flex-1 max-w-md mx-auto w-full">
         <Swiper
           onSwiper={(swiper) => { swiperRef.current = swiper; }}
@@ -131,20 +123,18 @@ export default function QuestionsPage() {
               <div className="flex flex-col items-center justify-start pt-4 pb-8 px-2 w-full">
                 {question.questionType === 'choice' ? (
                   <>
-                    {/* 질문 텍스트 */}
                     <AnimatePresence mode="wait">
                       <motion.h2
                         key={question.id}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="text-xl font-bold text-gray-800 text-center mb-6 leading-relaxed"
+                        className="text-xl font-bold text-[#1A1A1A] text-center mb-6 leading-relaxed"
                       >
                         {question.questionText}
                       </motion.h2>
                     </AnimatePresence>
 
-                    {/* 선택지 */}
                     <div className="w-full flex flex-col gap-3">
                       {question.choices.map((choice, cidx) => {
                         const isSelected = answers[question.id] === choice.id;
@@ -156,12 +146,12 @@ export default function QuestionsPage() {
                             transition={{ delay: cidx * 0.1 }}
                             whileTap={{ scale: 0.97 }}
                             onClick={() => handleChoiceSelect(question.id, choice.id)}
-                            className={`w-full p-4 text-left rounded-2xl border-2 transition-all text-sm leading-relaxed ${
+                            className={`w-full p-4 text-left rounded-xl border transition-all text-sm leading-relaxed ${
                               isSelected
                                 ? isDog
-                                  ? 'border-amber-500 bg-amber-50 text-amber-900 shadow-md'
-                                  : 'border-purple-500 bg-purple-50 text-purple-900 shadow-md'
-                                : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                                  ? 'border-[#C4824E] bg-[#FDF6F0] text-[#1A1A1A] shadow-sm'
+                                  : 'border-[#7C6B9E] bg-[#F5F0FA] text-[#1A1A1A] shadow-sm'
+                                : 'border-gray-200 bg-white text-[#6B7280] hover:border-gray-300'
                             }`}
                           >
                             {choice.text}
@@ -172,11 +162,10 @@ export default function QuestionsPage() {
                   </>
                 ) : (
                   <>
-                    {/* 자유입력 (마지막 카드) */}
                     <motion.h2
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-xl font-bold text-gray-800 text-center mb-4 leading-relaxed"
+                      className="text-xl font-bold text-[#1A1A1A] text-center mb-4 leading-relaxed"
                     >
                       {question.questionText}
                     </motion.h2>
@@ -185,7 +174,7 @@ export default function QuestionsPage() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
-                      className="text-sm text-gray-400 mb-4 text-center"
+                      className="text-sm text-[#9CA3AF] mb-4 text-center"
                     >
                       자유롭게 적어주세요 (선택사항)
                     </motion.p>
@@ -199,7 +188,9 @@ export default function QuestionsPage() {
                       placeholder="예: 산책하다가 다른 강아지를 보면 엎드려서 기다려요"
                       rows={4}
                       maxLength={500}
-                      className="w-full p-4 bg-white rounded-2xl border-2 border-gray-200 focus:border-amber-400 focus:outline-none resize-none text-sm leading-relaxed placeholder:text-gray-300"
+                      className={`w-full p-4 bg-white rounded-xl border focus:outline-none resize-none text-sm leading-relaxed placeholder:text-[#9CA3AF] ${
+                        isDog ? 'border-[#E8D5C4] focus:border-[#C4824E]' : 'border-[#D4C8E8] focus:border-[#7C6B9E]'
+                      }`}
                     />
 
                     <motion.button
@@ -210,13 +201,18 @@ export default function QuestionsPage() {
                       whileTap={{ scale: 0.95 }}
                       onClick={handleSubmit}
                       disabled={!allChoicesAnswered || submitting}
-                      className={`w-full h-14 mt-6 text-white text-lg font-bold rounded-2xl shadow-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+                      className={`w-full h-14 mt-6 text-white text-lg font-bold rounded-xl shadow-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
                         isDog
-                          ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/30'
-                          : 'bg-purple-500 hover:bg-purple-600 shadow-purple-500/30'
+                          ? 'bg-[#C4824E] hover:bg-[#B3743F]'
+                          : 'bg-[#7C6B9E] hover:bg-[#6B5A8D]'
                       }`}
                     >
-                      {submitting ? '제출 중...' : '분석하기 🔬'}
+                      {submitting ? '제출 중...' : (
+                        <>
+                          분석하기
+                          <Send className="w-5 h-5" />
+                        </>
+                      )}
                     </motion.button>
 
                     {!allChoicesAnswered && (

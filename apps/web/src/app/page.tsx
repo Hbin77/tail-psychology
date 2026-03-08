@@ -2,74 +2,69 @@
 
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { PawPrint, ArrowRight } from 'lucide-react';
 
 export default function LandingPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen bg-[#FAFAF8] flex flex-col items-center justify-center px-6">
       <div className="max-w-md mx-auto w-full flex flex-col items-center text-center gap-6">
-        {/* 꼬리 흔드는 애니메이션 */}
         <motion.div
-          animate={{ rotate: [0, 20, -20, 20, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}
-          className="text-7xl"
+          animate={{ rotate: [0, 10, -10, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity, repeatDelay: 1.5 }}
         >
-          🐾
+          <PawPrint className="w-16 h-16 text-[#C4824E]" strokeWidth={1.5} />
         </motion.div>
 
-        {/* 로고 */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-4xl font-black text-amber-900"
+          className="text-4xl font-black text-[#1A1A1A]"
         >
           꼬리심리학
         </motion.h1>
 
-        {/* 서브타이틀 */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-lg text-amber-700 font-medium"
+          className="text-lg text-[#6B7280] font-medium"
         >
-          우리 아이 꼬리가 말해주는 진짜 성격
+          학술 연구 기반 반려동물 성격 유형 검사
         </motion.p>
 
-        {/* 설명 */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="text-sm text-amber-600/80 leading-relaxed"
+          className="text-sm text-[#9CA3AF] leading-relaxed"
         >
-          13개의 질문으로 알아보는<br />
-          우리 반려동물의 MBTI 성격 유형 검사
+          13개의 문항으로 알아보는<br />
+          우리 아이의 행동 성격 유형
         </motion.p>
 
-        {/* CTA 버튼 */}
         <motion.button
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
           onClick={() => router.push('/select')}
-          className="mt-4 w-full h-14 bg-amber-500 hover:bg-amber-600 text-white text-lg font-bold rounded-2xl shadow-lg shadow-amber-500/30 transition-colors"
+          className="mt-4 w-full h-14 bg-[#C4824E] hover:bg-[#B3743F] text-white text-lg font-bold rounded-xl shadow-sm transition-colors flex items-center justify-center gap-2"
         >
-          시작하기 🐾
+          시작하기
+          <ArrowRight className="w-5 h-5" />
         </motion.button>
 
-        {/* 하단 텍스트 */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="text-xs text-amber-400 mt-2"
+          className="text-xs text-[#9CA3AF] mt-2"
         >
-          AI가 분석하는 반려동물 성격 유형 검사
+          C-BARQ, Feline Five 등 동물행동학 연구 기반
         </motion.p>
       </div>
     </div>

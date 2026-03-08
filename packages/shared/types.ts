@@ -2,15 +2,17 @@
 
 export type PetCategory = 'dog' | 'cat';
 
-export type Axis = 'energy' | 'social' | 'sensitivity' | 'curiosity';
+export type DogAxis = 'extraversion' | 'amicability' | 'neuroticism' | 'trainability';
+export type CatAxis = 'extraversion' | 'amicability' | 'neuroticism' | 'dominance';
+export type Axis = DogAxis | CatAxis;
 
-/** 4글자 유형 코드 (예: ASDE) */
+/** 4글자 유형 코드 (예: EAST, EASD) */
 export type TypeCode = string;
 
 export interface PetType {
   code: TypeCode;
   characterName: string;
-  characterEmoji: string;
+  icon: string;
   category: PetCategory;
   description: string;
   compatibleType: TypeCode;
@@ -19,7 +21,7 @@ export interface PetType {
 export interface Choice {
   id: string;
   text: string;
-  axisWeights: Record<Axis, number>;
+  axisWeights: Partial<Record<Axis, number>>;
 }
 
 export type QuestionType = 'choice' | 'free_text';
@@ -37,8 +39,7 @@ export interface Question {
 export interface DiagnosisResult {
   typeCode: TypeCode;
   characterName: string;
-  characterEmoji: string;
-  axisScores: Record<Axis, number>;
+  axisScores: Partial<Record<Axis, number>>;
   description: string;
   compatibility: PetType;
   shareToken: string;

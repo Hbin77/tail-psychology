@@ -8,11 +8,11 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "꼬리심리학 - 우리 아이 꼬리가 말해주는 진짜 성격",
-  description: "반려동물 성격 유형 검사. 멍BTI & 냥BTI로 우리 아이의 진짜 성격을 알아보세요!",
+  title: "꼬리심리학 | 반려동물 성격 유형 검사",
+  description: "학술 연구 기반 AI 반려동물 성격 분석. 13개 문항으로 알아보는 우리 아이의 행동 성격 유형.",
   openGraph: {
-    title: "꼬리심리학 🐾",
-    description: "우리 아이 꼬리가 말해주는 진짜 성격",
+    title: "꼬리심리학",
+    description: "학술 연구 기반 반려동물 성격 유형 검사",
   },
 };
 
