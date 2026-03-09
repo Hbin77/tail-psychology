@@ -6,6 +6,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { getResult } from '@/lib/api';
 import { DOG_TYPES, CAT_TYPES } from '@/data/questions';
 import { Share2, PawPrint, Heart, Loader2 } from 'lucide-react';
+import AdBanner from '@/components/AdBanner';
 
 interface ResultData {
   pet_name: string;
@@ -223,6 +224,11 @@ export default function ResultPage() {
             </div>
           </motion.div>
         )}
+
+        {/* 광고 배너 */}
+        <motion.div variants={fadeUp} className="w-full">
+          <AdBanner petCategory={isDog ? 'dog' : 'cat'} />
+        </motion.div>
 
         <motion.div variants={fadeUp} className="w-full flex flex-col gap-3">
           <button
