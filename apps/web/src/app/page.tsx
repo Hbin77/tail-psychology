@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { PawPrint, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -11,10 +12,10 @@ export default function LandingPage() {
     <div className="min-h-screen bg-[#FAFAF8] flex flex-col items-center justify-center px-6">
       <div className="max-w-md mx-auto w-full flex flex-col items-center text-center gap-6">
         <motion.div
-          animate={{ rotate: [0, 10, -10, 10, 0] }}
+          animate={{ rotate: [0, 8, -8, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, repeatDelay: 1.5 }}
         >
-          <PawPrint className="w-16 h-16 text-[#C4824E]" strokeWidth={1.5} />
+          <Image src="/logo.svg" alt="꼬리심리학 로고" width={80} height={80} priority />
         </motion.div>
 
         <motion.h1
