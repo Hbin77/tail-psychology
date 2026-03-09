@@ -4,6 +4,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 interface TestStore {
   petType: 'dog' | 'cat' | null;
   petName: string;
+  petBreed: string;
   sessionId: string | null;
   currentQuestionIndex: number;
   answers: Record<string, string>;
@@ -13,6 +14,7 @@ interface TestStore {
 
   setPetType: (type: 'dog' | 'cat') => void;
   setPetName: (name: string) => void;
+  setPetBreed: (breed: string) => void;
   setSessionId: (id: string) => void;
   setAnswer: (questionId: string, choiceId: string) => void;
   setFreeText: (questionId: string, text: string) => void;
@@ -27,6 +29,7 @@ interface TestStore {
 const initialState = {
   petType: null as 'dog' | 'cat' | null,
   petName: '',
+  petBreed: '',
   sessionId: null as string | null,
   currentQuestionIndex: 0,
   answers: {} as Record<string, string>,
@@ -42,6 +45,7 @@ export const useTestStore = create<TestStore>()(
 
       setPetType: (type) => set({ petType: type }),
       setPetName: (name) => set({ petName: name }),
+      setPetBreed: (breed) => set({ petBreed: breed }),
       setSessionId: (id) => set({ sessionId: id }),
       setAnswer: (questionId, choiceId) =>
         set((state) => ({ answers: { ...state.answers, [questionId]: choiceId } })),

@@ -45,6 +45,7 @@ async def adjust_scores(
     free_text: str,
     pet_name: str,
     pet_category: str,
+    pet_breed: str | None = None,
 ) -> dict[str, float] | None:
     """GPT-4o-mini로 자유입력을 분석하여 축별 보정값(-0.2 ~ +0.2)을 반환한다."""
     if not free_text or not free_text.strip():
@@ -54,6 +55,7 @@ async def adjust_scores(
 반려동물 정보:
 - 이름: {pet_name}
 - 종류: {"강아지" if pet_category == "dog" else "고양이"}
+- 품종: {pet_breed or "미상"}
 
 현재 축별 기본 점수 (-1 ~ +1):
 - extraversion (외향성): {base_scores.get('extraversion', 0):.2f}
@@ -93,6 +95,7 @@ async def generate_result_text(
     pet_name: str,
     axis_scores: dict[str, float],
     response_summary: str,
+    pet_breed: str | None = None,
 ) -> dict[str, str]:
     """GPT-4o-mini로 맞춤 설명과 궁합 텍스트를 생성한다."""
     prompt = f"""당신은 반려동물 성격 진단 결과를 재미있고 따뜻하게 설명하는 전문가입니다.
@@ -101,6 +104,7 @@ async def generate_result_text(
 - 이름: {pet_name}
 - 유형 코드: {type_code}
 - 캐릭터 이름: {character_name}
+- 품종: {pet_breed or "미상"}
 
 축별 점수 (-1 ~ +1):
 - extraversion (외향성): {axis_scores.get('extraversion', 0):.2f}
@@ -113,6 +117,8 @@ async def generate_result_text(
 {response_summary}
 
 다음 두 가지를 작성해주세요:
+품종 특성을 고려하여 설명해주세요. 품종별 일반적 기질과 비교하여 개체의 특성을 부각해주세요.
+
 1. description: {pet_name}의 성격을 3-4문단으로 따뜻하고 전문적으로 설명 (존댓말 톤, 이모지 사용 금지)
 2. compatibility: 이 유형과 잘 맞는 보호자 유형, 함께하면 좋은 활동 등을 2-3문단으로 설명
 

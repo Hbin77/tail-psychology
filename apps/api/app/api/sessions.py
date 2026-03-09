@@ -12,7 +12,7 @@ router = APIRouter(prefix="/api/v1/sessions", tags=["sessions"])
 
 @router.post("", response_model=SessionResponse, status_code=201)
 async def create_session(body: SessionCreate, db: AsyncSession = Depends(get_db)):
-    session = Session(pet_category=body.pet_category, pet_name=body.pet_name)
+    session = Session(pet_category=body.pet_category, pet_name=body.pet_name, pet_breed=body.pet_breed)
     db.add(session)
     await db.flush()
     await db.refresh(session)

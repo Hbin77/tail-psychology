@@ -1,10 +1,10 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
 
-export async function createSession(petCategory: string, petName: string) {
+export async function createSession(petCategory: string, petName: string, petBreed?: string) {
   const res = await fetch(`${API_BASE}/api/v1/sessions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ pet_category: petCategory, pet_name: petName }),
+    body: JSON.stringify({ pet_category: petCategory, pet_name: petName, pet_breed: petBreed || null }),
   });
   if (!res.ok) throw new Error('Failed to create session');
   return res.json();

@@ -51,7 +51,7 @@ async def run_diagnosis(session_id: UUID, db: AsyncSession) -> DiagnosisResult:
 
     if combined_free_text:
         adjustments = await adjust_scores(
-            base_scores, combined_free_text, session.pet_name, session.pet_category
+            base_scores, combined_free_text, session.pet_name, session.pet_category, session.pet_breed
         )
         if adjustments:
             llm_model = "gpt-4o-mini"
@@ -92,7 +92,7 @@ async def run_diagnosis(session_id: UUID, db: AsyncSession) -> DiagnosisResult:
 
     # 8. 결과 텍스트 생성
     result_text = await generate_result_text(
-        type_code, character_name, session.pet_name, final_scores, response_summary
+        type_code, character_name, session.pet_name, final_scores, response_summary, session.pet_breed
     )
 
     # 9. share_token 생성 및 Diagnosis 저장
