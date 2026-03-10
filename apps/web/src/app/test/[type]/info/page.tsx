@@ -60,7 +60,7 @@ export default function InfoPage() {
 
     try {
       const session = await createSession(type, name.trim(), breed === '모르겠어요 / 믹스' ? undefined : breed);
-      setSessionId(session.session_id);
+      setSessionId(session.id);
     } catch {
       setSessionId('offline-' + Date.now());
     }

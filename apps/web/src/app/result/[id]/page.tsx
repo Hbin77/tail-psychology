@@ -13,11 +13,10 @@ interface ResultData {
   pet_category: string;
   type_code: string;
   character_name: string;
-  icon: string;
-  description: string;
-  ai_description?: string;
-  compatible_type: string;
-  scores: {
+  ai_description: string;
+  ai_compatibility: string;
+  compatible_type: string | null;
+  axis_scores: {
     extraversion: number;
     amicability: number;
     neuroticism: number;
@@ -64,6 +63,11 @@ function ScoreBar({ value, leftLabel, rightLabel, color }: {
   );
 }
 
+function lookupType(typeCode: string, petCategory: string) {
+  const types = petCategory === 'dog' ? DOG_TYPES : CAT_TYPES;
+  return types.find((t) => t.code === typeCode);
+}
+
 export default function ResultPage() {
   const router = useRouter();
   const params = useParams();
@@ -75,8 +79,20 @@ export default function ResultPage() {
     async function fetchResult() {
       try {
         const data = await getResult(shareToken);
-        setResult(data);
+        // 백엔드 응답에 character_name이 없으면 로컬 타입 데이터에서 조회
+        const localType = lookupType(data.type_code, data.pet_category);
+        setResult({
+          pet_name: data.pet_name,
+          pet_category: data.pet_category,
+          type_code: data.type_code,
+          character_name: data.character_name || localType?.characterName || data.type_code,
+          ai_description: data.ai_description || localType?.description || '',
+          ai_compatibility: data.ai_compatibility || '',
+          compatible_type: data.compatible_type || localType?.compatibleType || null,
+          axis_scores: data.axis_scores,
+        });
       } catch {
+        // 데모/오프라인 모드
         const types = [...DOG_TYPES, ...CAT_TYPES];
         const randomType = types[Math.floor(Math.random() * types.length)];
         const isCat = randomType.category === 'cat';
@@ -85,10 +101,10 @@ export default function ResultPage() {
           pet_category: randomType.category,
           type_code: randomType.code,
           character_name: randomType.characterName,
-          icon: randomType.icon,
-          description: randomType.description,
+          ai_description: randomType.description,
+          ai_compatibility: '',
           compatible_type: randomType.compatibleType,
-          scores: {
+          axis_scores: {
             extraversion: Math.random() * 2 - 1,
             amicability: Math.random() * 2 - 1,
             neuroticism: Math.random() * 2 - 1,
@@ -192,7 +208,7 @@ export default function ResultPage() {
           {Object.entries(axisLabels).map(([axis, [left, right]]) => (
             <ScoreBar
               key={axis}
-              value={result.scores[axis as keyof typeof result.scores] ?? 0}
+              value={result.axis_scores[axis as keyof typeof result.axis_scores] ?? 0}
               leftLabel={left}
               rightLabel={right}
               color={isDog ? 'bg-[#C4824E]' : 'bg-[#7C6B9E]'}
@@ -202,10 +218,19 @@ export default function ResultPage() {
 
         <motion.div variants={fadeUp} className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h3 className="text-sm font-bold text-[#6B7280] mb-3">성격 설명</h3>
-          <p className="text-sm text-[#1A1A1A] leading-relaxed">
-            {result.ai_description || result.description}
+          <p className="text-sm text-[#1A1A1A] leading-relaxed whitespace-pre-line">
+            {result.ai_description}
           </p>
         </motion.div>
+
+        {result.ai_compatibility && (
+          <motion.div variants={fadeUp} className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h3 className="text-sm font-bold text-[#6B7280] mb-3">보호자 궁합</h3>
+            <p className="text-sm text-[#1A1A1A] leading-relaxed whitespace-pre-line">
+              {result.ai_compatibility}
+            </p>
+          </motion.div>
+        )}
 
         {compatibleType && (
           <motion.div variants={fadeUp} className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-6">

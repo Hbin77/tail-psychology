@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db
 from app.models.diagnosis import Diagnosis
+from app.models.pet_type import PetType
 from app.models.response import Response
 from app.models.session import Session
 from app.schemas.diagnosis import DiagnosisResponse, DiagnosisResult
@@ -71,20 +72,26 @@ async def get_diagnosis_by_share_token(
     if not diagnosis:
         raise HTTPException(status_code=404, detail="Diagnosis not found")
 
-    # 세션 정보도 함께 반환
+    # 세션 및 PetType 정보도 함께 반환
     session = await db.get(Session, diagnosis.session_id)
+    pet_type = await db.get(PetType, diagnosis.pet_type_id) if diagnosis.pet_type_id else None
+
+    # compatible type 조회
+    compatible_type_code = None
+    if pet_type and pet_type.compatible_types:
+        compatible_type_code = pet_type.compatible_types[0] if pet_type.compatible_types else None
 
     return {
         "id": str(diagnosis.id),
         "session_id": str(diagnosis.session_id),
         "type_code": diagnosis.type_code,
+        "character_name": pet_type.character_name if pet_type else diagnosis.type_code,
         "axis_scores": diagnosis.axis_scores,
         "ai_description": diagnosis.ai_description,
         "ai_compatibility": diagnosis.ai_compatibility,
+        "compatible_type": compatible_type_code,
         "share_token": diagnosis.share_token,
-        "llm_model_used": diagnosis.llm_model_used,
         "created_at": diagnosis.created_at.isoformat(),
         "pet_name": session.pet_name if session else None,
         "pet_category": session.pet_category if session else None,
-        "pet_type_id": str(diagnosis.pet_type_id) if diagnosis.pet_type_id else None,
     }
