@@ -51,6 +51,8 @@ async def adjust_scores(
     if not free_text or not free_text.strip():
         return None
 
+    free_text = free_text[:1000]
+
     prompt = f"""당신은 반려동물 성격 진단 전문가입니다.
 반려동물 정보:
 - 이름: {pet_name}

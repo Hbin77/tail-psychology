@@ -96,7 +96,7 @@ async def run_diagnosis(session_id: UUID, db: AsyncSession) -> DiagnosisResult:
     )
 
     # 9. share_token 생성 및 Diagnosis 저장
-    share_token = nanoid(size=12)
+    share_token = nanoid(size=21)
 
     diagnosis = Diagnosis(
         session_id=session_id,
