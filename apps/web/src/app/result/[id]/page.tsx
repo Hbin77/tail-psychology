@@ -7,6 +7,7 @@ import { getResult } from '@/lib/api';
 import { DOG_TYPES, CAT_TYPES } from '@/data/questions';
 import { Share2, PawPrint, Heart, Loader2 } from 'lucide-react';
 import AdBanner from '@/components/AdBanner';
+import KakaoAdFit from '@/components/KakaoAdFit';
 
 interface ResultData {
   pet_name: string;
@@ -250,7 +251,14 @@ export default function ResultPage() {
           </motion.div>
         )}
 
-        {/* 광고 배너 */}
+        {/* 카카오 애드핏 */}
+        {process.env.NEXT_PUBLIC_KAKAO_ADFIT_UNIT_ID && (
+          <motion.div variants={fadeUp} className="w-full flex justify-center">
+            <KakaoAdFit unitId={process.env.NEXT_PUBLIC_KAKAO_ADFIT_UNIT_ID} />
+          </motion.div>
+        )}
+
+        {/* 쿠팡 광고 배너 */}
         <motion.div variants={fadeUp} className="w-full">
           <AdBanner petCategory={isDog ? 'dog' : 'cat'} />
         </motion.div>
