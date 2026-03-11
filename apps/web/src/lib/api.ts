@@ -1,4 +1,10 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
+const SAFE_ID = /^[a-zA-Z0-9_-]+$/;
+
+function validateId(id: string, label: string): string {
+  if (!SAFE_ID.test(id)) throw new Error(`Invalid ${label}`);
+  return id;
+}
 
 export async function createSession(petCategory: string, petName: string, petBreed?: string) {
   const res = await fetch(`${API_BASE}/api/v1/sessions`, {
@@ -17,6 +23,7 @@ export async function getQuestions(petCategory: string) {
 }
 
 export async function submitResponses(sessionId: string, responses: { question_id: string; choice_id?: string; free_text?: string }[]) {
+  validateId(sessionId, 'sessionId');
   const res = await fetch(`${API_BASE}/api/v1/sessions/${sessionId}/responses`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -27,6 +34,7 @@ export async function submitResponses(sessionId: string, responses: { question_i
 }
 
 export async function runDiagnosis(sessionId: string) {
+  validateId(sessionId, 'sessionId');
   const res = await fetch(`${API_BASE}/api/v1/sessions/${sessionId}/diagnose`, {
     method: 'POST',
   });
@@ -35,6 +43,7 @@ export async function runDiagnosis(sessionId: string) {
 }
 
 export async function getResult(shareToken: string) {
+  validateId(shareToken, 'shareToken');
   const res = await fetch(`${API_BASE}/api/v1/diagnoses/${shareToken}`);
   if (!res.ok) throw new Error('Failed to get result');
   return res.json();

@@ -28,7 +28,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        <meta name="google-adsense-account" content="ca-pub-2355375334646881" />
+        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID && (
+          <meta name="google-adsense-account" content={process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID} />
+        )}
         {process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID && (
           <script
             async

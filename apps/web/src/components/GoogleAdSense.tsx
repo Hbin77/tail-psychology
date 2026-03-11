@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
@@ -21,7 +21,11 @@ export default function GoogleAdSense({
   fullWidthResponsive = true,
   style,
 }: GoogleAdSenseProps) {
+  const initialized = useRef(false);
+
   useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch {
