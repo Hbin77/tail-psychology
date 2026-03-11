@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   title: "꼬리심리학 | 반려동물 성격 유형 검사",
   description: "학술 연구 기반 AI 반려동물 성격 분석. 13개 문항으로 알아보는 우리 아이의 행동 성격 유형.",
   icons: {
-    icon: "/icon.svg",
-    apple: "/icon.svg",
+    icon: "/favicon.png",
+    apple: "/favicon.png",
   },
   openGraph: {
     title: "꼬리심리학",
