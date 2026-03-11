@@ -8,6 +8,9 @@ import { DOG_TYPES, CAT_TYPES } from '@/data/questions';
 import { Share2, PawPrint, Heart, Loader2 } from 'lucide-react';
 import AdBanner from '@/components/AdBanner';
 import KakaoAdFit from '@/components/KakaoAdFit';
+import ResultCard from '@/components/ResultCard';
+import ShareSheet from '@/components/ShareSheet';
+import { useCardImage } from '@/hooks/useCardImage';
 
 interface ResultData {
   pet_name: string;
@@ -75,6 +78,8 @@ export default function ResultPage() {
   const shareToken = params.id as string;
   const [result, setResult] = useState<ResultData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [shareSheetOpen, setShareSheetOpen] = useState(false);
+  const { cardRef, isGenerating, handleSaveImage, handleShareImage, handleShareLink } = useCardImage();
 
   useEffect(() => {
     async function fetchResult() {
@@ -120,18 +125,6 @@ export default function ResultPage() {
     }
     fetchResult();
   }, [shareToken]);
-
-  const handleShare = async () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: '꼬리심리학 결과', url });
-      } catch { /* user cancelled */ }
-    } else {
-      await navigator.clipboard.writeText(url);
-      alert('링크가 복사되었습니다!');
-    }
-  };
 
   if (loading) {
     return (
@@ -265,7 +258,7 @@ export default function ResultPage() {
 
         <motion.div variants={fadeUp} className="w-full flex flex-col gap-3">
           <button
-            onClick={handleShare}
+            onClick={() => setShareSheetOpen(true)}
             className={`w-full h-14 text-white text-lg font-bold rounded-xl shadow-sm flex items-center justify-center gap-2 ${
               isDog
                 ? 'bg-[#C4824E] hover:bg-[#B3743F]'
@@ -292,6 +285,27 @@ export default function ResultPage() {
           </p>
         </motion.div>
       </motion.div>
+
+      {/* 공유용 이미지 카드 (off-screen) */}
+      <ResultCard
+        ref={cardRef}
+        petName={result.pet_name}
+        petCategory={isDog ? 'dog' : 'cat'}
+        typeCode={result.type_code}
+        characterName={result.character_name}
+        axisScores={result.axis_scores}
+      />
+
+      {/* 공유 바텀시트 */}
+      <ShareSheet
+        isOpen={shareSheetOpen}
+        onClose={() => setShareSheetOpen(false)}
+        onSaveImage={handleSaveImage}
+        onShareImage={handleShareImage}
+        onShareLink={handleShareLink}
+        isGenerating={isGenerating}
+        isDog={isDog}
+      />
     </div>
   );
 }
