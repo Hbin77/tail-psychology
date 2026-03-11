@@ -51,7 +51,7 @@ function StaticScoreBar({ value, leftLabel, rightLabel, color }: {
   );
 }
 
-function truncateDescription(text: string, maxLen: number = 120): string {
+function truncateDescription(text: string, maxLen: number = 100): string {
   if (!text) return '';
   const clean = text.replace(/\n/g, ' ').trim();
   if (clean.length <= maxLen) return clean;
@@ -86,74 +86,81 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '100px 80px 80px',
+            justifyContent: 'center',
+            padding: '0 80px',
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             boxSizing: 'border-box',
           }}
         >
-          {/* Top: Brand + Logo */}
-          <div style={{ textAlign: 'center' }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/favicon.png"
-              alt=""
-              width={120}
-              height={120}
-              style={{ display: 'block', margin: '0 auto 20px' }}
-            />
-            <div style={{ fontSize: 30, fontWeight: 700, color: accentColor }}>꼬리심리학</div>
+          {/* Logo */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/favicon.png"
+            alt=""
+            width={100}
+            height={100}
+            style={{ marginBottom: 12 }}
+          />
+          <div style={{ fontSize: 28, fontWeight: 700, color: accentColor, marginBottom: 48 }}>
+            꼬리심리학
           </div>
 
-          {/* Middle: Result info */}
-          <div style={{ textAlign: 'center', width: '100%' }}>
-            {/* Pet name */}
-            <div style={{ fontSize: 34, color: '#6B7280', marginBottom: 20 }}>
-              {petName}의 성격 유형은
-            </div>
-
-            {/* Character name */}
-            <div style={{ fontSize: 80, fontWeight: 900, color: accentColor, marginBottom: 20 }}>
-              {characterName}
-            </div>
-
-            {/* Type code badge */}
-            <div style={{ display: 'inline-block', fontSize: 44, fontWeight: 800, letterSpacing: 8, color: accentColor, backgroundColor: 'rgba(255,255,255,0.6)', border: `3px solid ${badgeBorder}`, borderRadius: 40, padding: '14px 44px', marginBottom: 48 }}>
-              {typeCode}
-            </div>
-
-            {/* Description */}
-            {shortDesc && (
-              <div style={{ fontSize: 26, lineHeight: 1.7, color: '#4B5563', padding: '0 20px', marginBottom: 48 }}>
-                {shortDesc}
-              </div>
-            )}
-
-            {/* Score bars */}
-            <div style={{ width: '100%', padding: '40px 40px 20px', backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 32 }}>
-              <div style={{ textAlign: 'center', fontSize: 24, fontWeight: 700, color: '#6B7280', marginBottom: 28 }}>
-                성격 분석 차트
-              </div>
-              {axisLabels.map(([axis, left, right]) => (
-                <StaticScoreBar
-                  key={axis}
-                  value={axisScores[axis as keyof typeof axisScores] ?? 0}
-                  leftLabel={left}
-                  rightLabel={right}
-                  color={accentColor}
-                />
-              ))}
-            </div>
+          {/* Pet name */}
+          <div style={{ fontSize: 32, color: '#6B7280', marginBottom: 12 }}>
+            {petName}의 성격 유형은
           </div>
 
-          {/* Bottom: Watermark */}
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 22, color: '#9CA3AF' }}>
-              {isDog ? '강아지' : '고양이'} 성격 유형 검사
+          {/* Character name */}
+          <div style={{ fontSize: 76, fontWeight: 900, color: accentColor, marginBottom: 16 }}>
+            {characterName}
+          </div>
+
+          {/* Type code badge */}
+          <div
+            style={{
+              fontSize: 42,
+              fontWeight: 800,
+              letterSpacing: 8,
+              color: accentColor,
+              backgroundColor: 'rgba(255,255,255,0.6)',
+              border: `3px solid ${badgeBorder}`,
+              borderRadius: 40,
+              padding: '12px 40px',
+              marginBottom: 36,
+            }}
+          >
+            {typeCode}
+          </div>
+
+          {/* Description */}
+          {shortDesc && (
+            <div style={{ fontSize: 26, lineHeight: 1.7, color: '#4B5563', textAlign: 'center', padding: '0 20px', marginBottom: 40 }}>
+              {shortDesc}
             </div>
-            <div style={{ fontSize: 20, color: '#D1D5DB', marginTop: 6 }}>
-              꼬리심리학 | tailpsych.com
+          )}
+
+          {/* Score bars */}
+          <div style={{ width: '100%', padding: '36px 40px 16px', backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 32, marginBottom: 48 }}>
+            <div style={{ textAlign: 'center', fontSize: 22, fontWeight: 700, color: '#6B7280', marginBottom: 24 }}>
+              성격 분석 차트
             </div>
+            {axisLabels.map(([axis, left, right]) => (
+              <StaticScoreBar
+                key={axis}
+                value={axisScores[axis as keyof typeof axisScores] ?? 0}
+                leftLabel={left}
+                rightLabel={right}
+                color={accentColor}
+              />
+            ))}
+          </div>
+
+          {/* Watermark */}
+          <div style={{ fontSize: 22, color: '#9CA3AF', textAlign: 'center' }}>
+            {isDog ? '강아지' : '고양이'} 성격 유형 검사
+          </div>
+          <div style={{ fontSize: 20, color: '#D1D5DB', marginTop: 6 }}>
+            꼬리심리학 | tailpsych.com
           </div>
         </div>
       </div>
