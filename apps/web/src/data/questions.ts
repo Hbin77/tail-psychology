@@ -94,12 +94,12 @@ export const DOG_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'dog-energy-3', petCategory: 'dog', questionText: '다른 강아지랑 놀 때 우리 아이 체력은?', questionType: 'choice', axis: 'extraversion', orderIndex: 3,
+    id: 'dog-energy-3', petCategory: 'dog', questionText: '산책 후 집에 돌아오면 우리 아이는?', questionType: 'choice', axis: 'extraversion', orderIndex: 3,
     choices: [
-      { id: 'dog-e3-1', text: '상대가 지쳐 쓰러져도 혼자 계속 뛰어요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-e3-2', text: '한참 잘 놀다가 적당히 쉬어요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-e3-3', text: '조금 놀다가 금방 옆에서 쉬어요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-e3-4', text: '처음부터 관심 없이 구경만 해요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e3-1', text: '아직도 에너지가 넘쳐서 놀자고 해요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e3-2', text: '잠깐 쉬더니 금방 또 돌아다녀요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e3-3', text: '자기 자리에 가서 쉬어요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e3-4', text: '바로 드러누워서 깊이 잠들어요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, trainability: 0 } },
     ],
   },
   {
@@ -112,12 +112,12 @@ export const DOG_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'dog-social-2', petCategory: 'dog', questionText: '강아지 카페에 가면 우리 아이는?', questionType: 'choice', axis: 'amicability', orderIndex: 5,
+    id: 'dog-social-2', petCategory: 'dog', questionText: '산책 중 다른 강아지를 만나면?', questionType: 'choice', axis: 'amicability', orderIndex: 5,
     choices: [
-      { id: 'dog-s2-1', text: '모든 강아지에게 먼저 인사하러 다녀요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-s2-2', text: '마음에 드는 친구를 골라 다가가요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-s2-3', text: '다른 강아지가 다가오면 놀아주긴 해요', axisWeights: { extraversion: 0, amicability: -1, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-s2-4', text: '보호자 옆에만 붙어 있으려 해요', axisWeights: { extraversion: 0, amicability: -2, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-s2-1', text: '꼬리 흔들며 먼저 달려가서 인사해요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-s2-2', text: '조심스럽게 다가가서 냄새를 맡아요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-s2-3', text: '상대가 다가오면 받아주긴 해요', axisWeights: { extraversion: 0, amicability: -1, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-s2-4', text: '무시하거나 피하려 해요', axisWeights: { extraversion: 0, amicability: -2, neuroticism: 0, trainability: 0 } },
     ],
   },
   {
