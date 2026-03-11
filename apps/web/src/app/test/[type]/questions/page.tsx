@@ -9,7 +9,7 @@ import 'swiper/css';
 import { useTestStore } from '@/stores/useTestStore';
 import { DOG_QUESTIONS, CAT_QUESTIONS } from '@/data/questions';
 import { submitResponses, runDiagnosis } from '@/lib/api';
-import { ChevronLeft, Send } from 'lucide-react';
+import { ChevronLeft, Send, PenLine, Check } from 'lucide-react';
 
 export default function QuestionsPage() {
   const router = useRouter();
@@ -18,6 +18,7 @@ export default function QuestionsPage() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const [customInputOpen, setCustomInputOpen] = useState<Record<string, boolean>>({});
 
   const {
     petName,
@@ -35,12 +36,31 @@ export default function QuestionsPage() {
 
   const handleChoiceSelect = useCallback((questionId: string, choiceId: string) => {
     setAnswer(questionId, choiceId);
+    setFreeText(questionId, '');
+    setCustomInputOpen((prev) => ({ ...prev, [questionId]: false }));
     setTimeout(() => {
       if (swiperRef.current && activeIndex < totalQuestions - 1) {
         swiperRef.current.slideNext();
       }
     }, 500);
-  }, [setAnswer, activeIndex, totalQuestions]);
+  }, [setAnswer, setFreeText, activeIndex, totalQuestions]);
+
+  const handleCustomInputToggle = useCallback((questionId: string) => {
+    setCustomInputOpen((prev) => ({ ...prev, [questionId]: !prev[questionId] }));
+    // Clear choice when opening custom input
+    setAnswer(questionId, '');
+  }, [setAnswer]);
+
+  const handleCustomInputConfirm = useCallback((questionId: string) => {
+    const text = freeTextAnswers[questionId];
+    if (text && text.trim()) {
+      setTimeout(() => {
+        if (swiperRef.current && activeIndex < totalQuestions - 1) {
+          swiperRef.current.slideNext();
+        }
+      }, 300);
+    }
+  }, [freeTextAnswers, activeIndex, totalQuestions]);
 
   const handleSubmit = async () => {
     if (submitting) return;
@@ -50,6 +70,11 @@ export default function QuestionsPage() {
       const responses = questions.map((q) => {
         if (q.questionType === 'free_text') {
           return { question_id: q.id, free_text: freeTextAnswers[q.id] || '' };
+        }
+        // 직접 입력으로 답변한 경우 free_text로 전송
+        const customText = freeTextAnswers[q.id];
+        if (customText && customText.trim() && !answers[q.id]) {
+          return { question_id: q.id, free_text: customText };
         }
         return { question_id: q.id, choice_id: answers[q.id] };
       }).filter((r) => r.choice_id || r.free_text);
@@ -78,7 +103,9 @@ export default function QuestionsPage() {
   };
 
   const choiceQuestions = questions.filter((q) => q.questionType === 'choice');
-  const answeredCount = choiceQuestions.filter((q) => answers[q.id]).length;
+  const answeredCount = choiceQuestions.filter(
+    (q) => answers[q.id] || (freeTextAnswers[q.id] && freeTextAnswers[q.id].trim())
+  ).length;
   const allChoicesAnswered = answeredCount === choiceQuestions.length;
 
   return (
@@ -158,6 +185,60 @@ export default function QuestionsPage() {
                           </motion.button>
                         );
                       })}
+
+                      <motion.button
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={() => handleCustomInputToggle(question.id)}
+                        className={`w-full p-4 text-left rounded-xl border transition-all text-sm leading-relaxed flex items-center gap-2 ${
+                          customInputOpen[question.id]
+                            ? isDog
+                              ? 'border-[#C4824E] bg-[#FDF6F0] text-[#1A1A1A] shadow-sm'
+                              : 'border-[#7C6B9E] bg-[#F5F0FA] text-[#1A1A1A] shadow-sm'
+                            : 'border-dashed border-gray-300 bg-white text-[#9CA3AF] hover:border-gray-400'
+                        }`}
+                      >
+                        <PenLine className="w-4 h-4 flex-shrink-0" />
+                        해당하는 선택지가 없어요 (직접 입력)
+                      </motion.button>
+
+                      <AnimatePresence>
+                        {customInputOpen[question.id] && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="w-full overflow-hidden"
+                          >
+                            <div className="flex flex-col gap-2 pt-1">
+                              <textarea
+                                value={freeTextAnswers[question.id] || ''}
+                                onChange={(e) => setFreeText(question.id, e.target.value)}
+                                placeholder="우리 아이는 이럴 때 이렇게 해요..."
+                                rows={2}
+                                maxLength={300}
+                                className={`w-full p-3 bg-white rounded-xl border focus:outline-none resize-none text-sm leading-relaxed placeholder:text-[#9CA3AF] ${
+                                  isDog ? 'border-[#E8D5C4] focus:border-[#C4824E]' : 'border-[#D4C8E8] focus:border-[#7C6B9E]'
+                                }`}
+                              />
+                              <button
+                                onClick={() => handleCustomInputConfirm(question.id)}
+                                disabled={!freeTextAnswers[question.id]?.trim()}
+                                className={`self-end px-4 py-2 text-white text-sm font-bold rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 ${
+                                  isDog
+                                    ? 'bg-[#C4824E] hover:bg-[#B3743F]'
+                                    : 'bg-[#7C6B9E] hover:bg-[#6B5A8D]'
+                                }`}
+                              >
+                                <Check className="w-4 h-4" />
+                                확인
+                              </button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                   </>
                 ) : (
