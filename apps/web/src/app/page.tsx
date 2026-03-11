@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { PawPrint, ArrowRight } from 'lucide-react';
 
 export default function LandingPage() {
@@ -66,6 +67,19 @@ export default function LandingPage() {
         >
           C-BARQ, Feline Five 등 동물행동학 연구 기반
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4 }}
+          className="flex items-center gap-3 mt-4 text-xs text-[#9CA3AF]"
+        >
+          <Link href="/about" className="hover:text-[#6B7280] transition-colors">소개</Link>
+          <span>|</span>
+          <Link href="/privacy" className="hover:text-[#6B7280] transition-colors">개인정보처리방침</Link>
+          <span>|</span>
+          <Link href="/terms" className="hover:text-[#6B7280] transition-colors">이용약관</Link>
+        </motion.div>
       </div>
     </div>
   );
