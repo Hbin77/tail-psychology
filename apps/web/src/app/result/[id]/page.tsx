@@ -301,6 +301,7 @@ export default function ResultPage() {
         petCategory={isDog ? 'dog' : 'cat'}
         typeCode={result.type_code}
         characterName={result.character_name}
+        description={result.ai_description}
         axisScores={result.axis_scores}
       />
 
