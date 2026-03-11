@@ -38,20 +38,20 @@ function StaticScoreBar({ value, leftLabel, rightLabel, color }: {
   const percent = ((value + 1) / 2) * 100;
 
   return (
-    <div style={{ width: '100%', marginBottom: 20 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 22, color: '#6B7280', marginBottom: 8 }}>
+    <div style={{ width: '100%', marginBottom: 28 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 26, color: '#6B7280', marginBottom: 10 }}>
         <span>{leftLabel}</span>
         <span>{rightLabel}</span>
       </div>
-      <div style={{ width: '100%', height: 20, backgroundColor: '#E5E7EB', borderRadius: 10, position: 'relative', overflow: 'hidden' }}>
-        <div style={{ width: `${percent}%`, height: '100%', borderRadius: 10, backgroundColor: color }} />
+      <div style={{ width: '100%', height: 24, backgroundColor: '#E5E7EB', borderRadius: 12, position: 'relative', overflow: 'hidden' }}>
+        <div style={{ width: `${percent}%`, height: '100%', borderRadius: 12, backgroundColor: color }} />
         <div style={{ position: 'absolute', top: 0, left: '50%', width: 2, height: '100%', backgroundColor: '#D1D5DB' }} />
       </div>
     </div>
   );
 }
 
-function truncateDescription(text: string, maxLen: number = 100): string {
+function truncateDescription(text: string, maxLen: number = 120): string {
   if (!text) return '';
   const clean = text.replace(/\n/g, ' ').trim();
   if (clean.length <= maxLen) return clean;
@@ -86,8 +86,7 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            padding: '0 80px',
+            padding: '80px 80px 60px',
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             boxSizing: 'border-box',
           }}
@@ -97,36 +96,36 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
           <img
             src="/favicon.png"
             alt=""
-            width={100}
-            height={100}
-            style={{ marginBottom: 12 }}
+            width={140}
+            height={140}
+            style={{ marginBottom: 16 }}
           />
-          <div style={{ fontSize: 28, fontWeight: 700, color: accentColor, marginBottom: 48 }}>
+          <div style={{ fontSize: 32, fontWeight: 700, color: accentColor, marginBottom: 60 }}>
             꼬리심리학
           </div>
 
           {/* Pet name */}
-          <div style={{ fontSize: 32, color: '#6B7280', marginBottom: 12 }}>
+          <div style={{ fontSize: 36, color: '#6B7280', marginBottom: 20 }}>
             {petName}의 성격 유형은
           </div>
 
           {/* Character name */}
-          <div style={{ fontSize: 76, fontWeight: 900, color: accentColor, marginBottom: 16 }}>
+          <div style={{ fontSize: 96, fontWeight: 900, color: accentColor, marginBottom: 24 }}>
             {characterName}
           </div>
 
           {/* Type code badge */}
           <div
             style={{
-              fontSize: 42,
+              fontSize: 52,
               fontWeight: 800,
-              letterSpacing: 8,
+              letterSpacing: 10,
               color: accentColor,
               backgroundColor: 'rgba(255,255,255,0.6)',
               border: `3px solid ${badgeBorder}`,
-              borderRadius: 40,
-              padding: '12px 40px',
-              marginBottom: 36,
+              borderRadius: 44,
+              padding: '16px 52px',
+              marginBottom: 48,
             }}
           >
             {typeCode}
@@ -134,14 +133,24 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
 
           {/* Description */}
           {shortDesc && (
-            <div style={{ fontSize: 26, lineHeight: 1.7, color: '#4B5563', textAlign: 'center', padding: '0 20px', marginBottom: 40 }}>
+            <div style={{
+              width: '100%',
+              fontSize: 30,
+              lineHeight: 1.8,
+              color: '#4B5563',
+              textAlign: 'center',
+              backgroundColor: 'rgba(255,255,255,0.5)',
+              borderRadius: 24,
+              padding: '36px 40px',
+              marginBottom: 48,
+            }}>
               {shortDesc}
             </div>
           )}
 
           {/* Score bars */}
-          <div style={{ width: '100%', padding: '36px 40px 16px', backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 32, marginBottom: 48 }}>
-            <div style={{ textAlign: 'center', fontSize: 22, fontWeight: 700, color: '#6B7280', marginBottom: 24 }}>
+          <div style={{ width: '100%', padding: '44px 48px 16px', backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 32, marginBottom: 0 }}>
+            <div style={{ textAlign: 'center', fontSize: 26, fontWeight: 700, color: '#6B7280', marginBottom: 32 }}>
               성격 분석 차트
             </div>
             {axisLabels.map(([axis, left, right]) => (
@@ -155,11 +164,14 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
             ))}
           </div>
 
+          {/* Spacer to push watermark to bottom */}
+          <div style={{ flex: 1 }} />
+
           {/* Watermark */}
-          <div style={{ fontSize: 22, color: '#9CA3AF', textAlign: 'center' }}>
+          <div style={{ fontSize: 24, color: '#9CA3AF', textAlign: 'center' }}>
             {isDog ? '강아지' : '고양이'} 성격 유형 검사
           </div>
-          <div style={{ fontSize: 20, color: '#D1D5DB', marginTop: 6 }}>
+          <div style={{ fontSize: 22, color: '#D1D5DB', marginTop: 8 }}>
             꼬리심리학 | tailpsych.com
           </div>
         </div>
