@@ -61,7 +61,7 @@ async def run_diagnosis(session_id: UUID, db: AsyncSession) -> DiagnosisResult:
                 )
 
     # 5. 유형 코드 결정
-    type_code = determine_type_code(final_scores)
+    type_code = determine_type_code(final_scores, session.pet_category)
 
     # 6. PetType 조회
     pt_result = await db.execute(

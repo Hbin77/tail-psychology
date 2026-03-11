@@ -284,6 +284,13 @@ export default function ResultPage() {
             다른 친구도 테스트하기
           </button>
         </motion.div>
+
+        <motion.div variants={fadeUp} className="w-full text-center">
+          <p className="text-[10px] text-[#9CA3AF] leading-relaxed">
+            본 검사는 C-BARQ, Feline Five 등 학술 연구를 참고하여 만든 재미 목적의 성격 유형 검사이며,
+            수의행동학적 진단을 대체하지 않습니다.
+          </p>
+        </motion.div>
       </motion.div>
     </div>
   );

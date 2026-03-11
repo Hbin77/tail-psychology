@@ -20,7 +20,7 @@ async def _call_openai(messages: list[dict], max_tokens: int = 500) -> str | Non
         "model": "gpt-4o-mini",
         "messages": messages,
         "max_tokens": max_tokens,
-        "temperature": 0.7,
+        "temperature": 0.3,
     }
 
     async with httpx.AsyncClient(timeout=30.0) as client:
@@ -69,7 +69,7 @@ async def adjust_scores(
 보호자의 자유 서술:
 "{free_text}"
 
-위 자유 서술을 분석하여 각 축에 대한 보정값을 -0.2에서 +0.2 사이로 제시해주세요.
+위 자유 서술을 분석하여 각 축에 대한 보정값을 -0.1에서 +0.1 사이로 제시해주세요.
 해당 반려동물에 해당하는 축만 포함하세요 (강아지: extraversion, amicability, neuroticism, trainability / 고양이: extraversion, amicability, neuroticism, dominance).
 반드시 아래 JSON 형식으로만 응답하세요:
 {{"extraversion": 0.0, "amicability": 0.0, "neuroticism": 0.0, "trainability": 0.0}}"""
@@ -84,7 +84,7 @@ async def adjust_scores(
         adjustments = _extract_json(text)
         for axis in ["extraversion", "amicability", "neuroticism", "trainability", "dominance"]:
             val = float(adjustments.get(axis, 0.0))
-            adjustments[axis] = max(-0.2, min(0.2, val))
+            adjustments[axis] = max(-0.1, min(0.1, val))
         return adjustments
     except Exception as e:
         logger.error(f"LLM adjust_scores failed: {e}")

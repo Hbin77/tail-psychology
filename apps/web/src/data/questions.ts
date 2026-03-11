@@ -74,36 +74,20 @@ export const CAT_TYPES: PetType[] = [
   { code: 'IRCP', characterName: '은둔자', icon: 'castle', category: 'cat', description: '자기 성에서 유유자적하는 느긋한 독립파. 자기만의 공간에서 편안하게 시간을 보내는 것이 최고의 행복인, 도도하고 우아한 고양이입니다.', compatibleType: 'EASD' },
 ];
 
+// 질문 순서: 축 간 교차 배치 (일관성 편향 방지)
+// E1->A1->N1->T1->E2->A2->N2->T2->E3->A3->N3->T3->자유서술
 export const DOG_QUESTIONS: Question[] = [
   {
     id: 'dog-energy-1', petCategory: 'dog', questionText: '산책하자고 하면 우리 아이 반응은?', questionType: 'choice', axis: 'extraversion', orderIndex: 1,
     choices: [
-      { id: 'dog-e1-1', text: '리드줄만 봐도 미친 듯이 뛰어다녀요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e1-1', text: '리드줄만 봐도 흥분하며 뛰어다녀요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, trainability: 0 } },
       { id: 'dog-e1-2', text: '꼬리 흔들며 현관으로 달려가요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, trainability: 0 } },
       { id: 'dog-e1-3', text: '기지개 한번 켜고 슬슬 일어나요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-e1-4', text: '자리에서 눈만 굴리며 "꼭 가야 해?" 표정이에요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e1-4', text: '자리에서 눈만 굴려요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, trainability: 0 } },
     ],
   },
   {
-    id: 'dog-energy-2', petCategory: 'dog', questionText: '집에서 우리 아이는 주로 어떤 상태인가요?', questionType: 'choice', axis: 'extraversion', orderIndex: 2,
-    choices: [
-      { id: 'dog-e2-1', text: '장난감을 물고 끊임없이 돌아다녀요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-e2-2', text: '이리저리 왔다 갔다 하며 활동적이에요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-e2-3', text: '좋아하는 자리에서 쉬다가 가끔 움직여요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-e2-4', text: '거의 하루 종일 누워서 자요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, trainability: 0 } },
-    ],
-  },
-  {
-    id: 'dog-energy-3', petCategory: 'dog', questionText: '산책 후 집에 돌아오면 우리 아이는?', questionType: 'choice', axis: 'extraversion', orderIndex: 3,
-    choices: [
-      { id: 'dog-e3-1', text: '아직도 에너지가 넘쳐서 놀자고 해요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-e3-2', text: '잠깐 쉬더니 금방 또 돌아다녀요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-e3-3', text: '자기 자리에 가서 쉬어요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-e3-4', text: '바로 드러누워서 깊이 잠들어요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, trainability: 0 } },
-    ],
-  },
-  {
-    id: 'dog-social-1', petCategory: 'dog', questionText: '처음 보는 사람이 집에 오면?', questionType: 'choice', axis: 'amicability', orderIndex: 4,
+    id: 'dog-social-1', petCategory: 'dog', questionText: '처음 보는 사람이 집에 오면?', questionType: 'choice', axis: 'amicability', orderIndex: 2,
     choices: [
       { id: 'dog-s1-1', text: '꼬리 흔들며 달려가서 온몸으로 환영해요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, trainability: 0 } },
       { id: 'dog-s1-2', text: '다가가서 냄새를 맡고 친해지려 해요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, trainability: 0 } },
@@ -112,25 +96,7 @@ export const DOG_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'dog-social-2', petCategory: 'dog', questionText: '산책 중 다른 강아지를 만나면?', questionType: 'choice', axis: 'amicability', orderIndex: 5,
-    choices: [
-      { id: 'dog-s2-1', text: '꼬리 흔들며 먼저 달려가서 인사해요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-s2-2', text: '조심스럽게 다가가서 냄새를 맡아요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-s2-3', text: '상대가 다가오면 받아주긴 해요', axisWeights: { extraversion: 0, amicability: -1, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-s2-4', text: '무시하거나 피하려 해요', axisWeights: { extraversion: 0, amicability: -2, neuroticism: 0, trainability: 0 } },
-    ],
-  },
-  {
-    id: 'dog-social-3', petCategory: 'dog', questionText: '보호자가 외출 준비를 하면?', questionType: 'choice', axis: 'amicability', orderIndex: 6,
-    choices: [
-      { id: 'dog-s3-1', text: '현관 앞을 막고 "나도 데려가!" 난리예요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-s3-2', text: '아쉬운 눈으로 따라다니며 쳐다봐요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-s3-3', text: '잠깐 쳐다보다가 자기 할 일 해요', axisWeights: { extraversion: 0, amicability: -1, neuroticism: 0, trainability: 0 } },
-      { id: 'dog-s3-4', text: '전혀 신경 안 쓰고 자던 자리에 그대로예요', axisWeights: { extraversion: 0, amicability: -2, neuroticism: 0, trainability: 0 } },
-    ],
-  },
-  {
-    id: 'dog-sensitivity-1', petCategory: 'dog', questionText: '갑자기 큰 소리(천둥, 폭죽 등)가 나면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 7,
+    id: 'dog-sensitivity-1', petCategory: 'dog', questionText: '갑자기 큰 소리(천둥, 폭죽 등)가 나면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 3,
     choices: [
       { id: 'dog-d1-1', text: '벌벌 떨면서 숨을 곳을 찾아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 2, trainability: 0 } },
       { id: 'dog-d1-2', text: '보호자에게 바짝 붙어서 불안해해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 1, trainability: 0 } },
@@ -139,48 +105,84 @@ export const DOG_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'dog-sensitivity-2', petCategory: 'dog', questionText: '보호자가 기분이 안 좋을 때 우리 아이는?', questionType: 'choice', axis: 'neuroticism', orderIndex: 8,
+    id: 'dog-curiosity-1', petCategory: 'dog', questionText: '새로운 장난감을 주면?', questionType: 'choice', axis: 'trainability', orderIndex: 4,
     choices: [
-      { id: 'dog-d2-1', text: '옆에 와서 얼굴을 핥거나 몸을 기대요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 2, trainability: 0 } },
-      { id: 'dog-d2-2', text: '평소보다 조용히 곁에 있어요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 1, trainability: 0 } },
-      { id: 'dog-d2-3', text: '평소와 별 차이 없어요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -1, trainability: 0 } },
-      { id: 'dog-d2-4', text: '전혀 모르는 것 같아요, 자기 세계에 빠져 있어요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -2, trainability: 0 } },
+      { id: 'dog-c1-1', text: '바로 물고 흔들고 분해하려 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 2 } },
+      { id: 'dog-c1-2', text: '코로 탐색하고 조심스럽게 놀아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 1 } },
+      { id: 'dog-c1-3', text: '한번 보고 기존 장난감으로 돌아가요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -1 } },
+      { id: 'dog-c1-4', text: '관심 없이 쳐다보기만 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -2 } },
     ],
   },
   {
-    id: 'dog-sensitivity-3', petCategory: 'dog', questionText: '집 안 가구 배치를 바꾸면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 9,
+    id: 'dog-energy-2', petCategory: 'dog', questionText: '집에서 우리 아이는 주로 어떤 상태인가요?', questionType: 'choice', axis: 'extraversion', orderIndex: 5,
+    choices: [
+      { id: 'dog-e2-1', text: '장난감을 물고 끊임없이 돌아다녀요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e2-2', text: '이리저리 왔다 갔다 하며 활동적이에요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e2-3', text: '좋아하는 자리에서 쉬다가 가끔 움직여요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e2-4', text: '거의 하루 종일 누워서 자요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, trainability: 0 } },
+    ],
+  },
+  {
+    id: 'dog-social-2', petCategory: 'dog', questionText: '산책 중 다른 강아지를 만나면?', questionType: 'choice', axis: 'amicability', orderIndex: 6,
+    choices: [
+      { id: 'dog-s2-1', text: '꼬리 흔들며 먼저 달려가서 인사해요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-s2-2', text: '조심스럽게 다가가서 냄새를 맡아요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-s2-3', text: '상대가 다가오면 받아주긴 해요', axisWeights: { extraversion: 0, amicability: -1, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-s2-4', text: '무시하거나 피하려 해요', axisWeights: { extraversion: 0, amicability: -2, neuroticism: 0, trainability: 0 } },
+    ],
+  },
+  {
+    id: 'dog-sensitivity-2', petCategory: 'dog', questionText: '갑자기 물건이 떨어지거나 문이 쾅 닫히면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 7,
+    choices: [
+      { id: 'dog-d2-1', text: '깜짝 놀라서 한참 동안 진정을 못 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 2, trainability: 0 } },
+      { id: 'dog-d2-2', text: '움찔하고 경계 자세를 취해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 1, trainability: 0 } },
+      { id: 'dog-d2-3', text: '잠깐 쳐다보고 금방 원래대로 돌아와요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -1, trainability: 0 } },
+      { id: 'dog-d2-4', text: '전혀 반응하지 않아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -2, trainability: 0 } },
+    ],
+  },
+  {
+    id: 'dog-curiosity-2', petCategory: 'dog', questionText: '처음 가보는 장소(동물병원 제외)에서 우리 아이는?', questionType: 'choice', axis: 'trainability', orderIndex: 8,
+    choices: [
+      { id: 'dog-c2-1', text: '신나서 구석구석 탐험해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 2 } },
+      { id: 'dog-c2-2', text: '천천히 돌아다니며 냄새를 맡아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 1 } },
+      { id: 'dog-c2-3', text: '보호자 근처에서만 조심스럽게 움직여요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -1 } },
+      { id: 'dog-c2-4', text: '보호자 뒤에 숨거나 안기려 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -2 } },
+    ],
+  },
+  {
+    id: 'dog-energy-3', petCategory: 'dog', questionText: '놀이 시간이 끝나면 우리 아이는?', questionType: 'choice', axis: 'extraversion', orderIndex: 9,
+    choices: [
+      { id: 'dog-e3-1', text: '아직도 에너지가 넘쳐서 더 놀자고 해요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e3-2', text: '잠깐 쉬더니 금방 또 돌아다녀요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e3-3', text: '자기 자리에 가서 쉬어요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-e3-4', text: '바로 드러누워서 깊이 잠들어요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, trainability: 0 } },
+    ],
+  },
+  {
+    id: 'dog-social-3', petCategory: 'dog', questionText: '여러 사람이 모인 곳에서 우리 아이는?', questionType: 'choice', axis: 'amicability', orderIndex: 10,
+    choices: [
+      { id: 'dog-s3-1', text: '모든 사람에게 돌아다니며 관심을 받으려 해요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-s3-2', text: '몇 명에게 다가가서 냄새를 맡아요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-s3-3', text: '보호자 옆에서 조용히 지켜봐요', axisWeights: { extraversion: 0, amicability: -1, neuroticism: 0, trainability: 0 } },
+      { id: 'dog-s3-4', text: '숨거나 구석으로 가려 해요', axisWeights: { extraversion: 0, amicability: -2, neuroticism: 0, trainability: 0 } },
+    ],
+  },
+  {
+    id: 'dog-sensitivity-3', petCategory: 'dog', questionText: '집 안 가구 배치를 바꾸면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 11,
     choices: [
       { id: 'dog-d3-1', text: '불안해하며 한참 동안 적응을 못 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 2, trainability: 0 } },
-      { id: 'dog-d3-2', text: '킁킁거리며 꼼꼼히 확인해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 1, trainability: 0 } },
+      { id: 'dog-d3-2', text: '조심스럽게 돌아다니며 확인해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 1, trainability: 0 } },
       { id: 'dog-d3-3', text: '잠깐 둘러보고 금방 적응해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -1, trainability: 0 } },
-      { id: 'dog-d3-4', text: '아무 반응 없어요, 바뀐 줄도 모르는 것 같아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -2, trainability: 0 } },
+      { id: 'dog-d3-4', text: '아무 반응 없어요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -2, trainability: 0 } },
     ],
   },
   {
-    id: 'dog-curiosity-1', petCategory: 'dog', questionText: '산책 중 처음 가보는 길이 나타나면?', questionType: 'choice', axis: 'trainability', orderIndex: 10,
+    id: 'dog-curiosity-3', petCategory: 'dog', questionText: '산책 중 처음 가보는 길이 나타나면?', questionType: 'choice', axis: 'trainability', orderIndex: 12,
     choices: [
-      { id: 'dog-c1-1', text: '리드줄 팽팽하게 당기며 돌진해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 2 } },
-      { id: 'dog-c1-2', text: '호기심을 보이며 킁킁거리며 들어가요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 1 } },
-      { id: 'dog-c1-3', text: '입구에서 잠깐 냄새 맡고 원래 길로 가요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -1 } },
-      { id: 'dog-c1-4', text: '익숙한 길이 아니면 가기 싫어해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -2 } },
-    ],
-  },
-  {
-    id: 'dog-curiosity-2', petCategory: 'dog', questionText: '새로운 장난감을 주면?', questionType: 'choice', axis: 'trainability', orderIndex: 11,
-    choices: [
-      { id: 'dog-c2-1', text: '바로 물고 흔들고 분해하려 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 2 } },
-      { id: 'dog-c2-2', text: '코로 킁킁 탐색하고 조심스럽게 놀아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 1 } },
-      { id: 'dog-c2-3', text: '한번 보고 기존 장난감으로 돌아가요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -1 } },
-      { id: 'dog-c2-4', text: '경계하며 멀리서 쳐다보기만 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -2 } },
-    ],
-  },
-  {
-    id: 'dog-curiosity-3', petCategory: 'dog', questionText: '처음 가보는 장소(동물병원 제외)에서 우리 아이는?', questionType: 'choice', axis: 'trainability', orderIndex: 12,
-    choices: [
-      { id: 'dog-c3-1', text: '신나서 구석구석 탐험해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 2 } },
-      { id: 'dog-c3-2', text: '천천히 돌아다니며 냄새를 맡아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 1 } },
-      { id: 'dog-c3-3', text: '보호자 근처에서만 조심스럽게 움직여요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -1 } },
-      { id: 'dog-c3-4', text: '보호자 뒤에 숨거나 안기려 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -2 } },
+      { id: 'dog-c3-1', text: '리드줄을 당기며 들어가려 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 2 } },
+      { id: 'dog-c3-2', text: '호기심을 보이며 냄새를 맡아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: 1 } },
+      { id: 'dog-c3-3', text: '입구에서 잠깐 냄새 맡고 원래 길로 가요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -1 } },
+      { id: 'dog-c3-4', text: '익숙한 길이 아니면 가기 싫어해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, trainability: -2 } },
     ],
   },
   {
@@ -188,36 +190,19 @@ export const DOG_QUESTIONS: Question[] = [
   },
 ];
 
+// 질문 순서: 축 간 교차 배치 (일관성 편향 방지)
 export const CAT_QUESTIONS: Question[] = [
   {
     id: 'cat-energy-1', petCategory: 'cat', questionText: '놀아주자고 장난감을 꺼내면?', questionType: 'choice', axis: 'extraversion', orderIndex: 1,
     choices: [
-      { id: 'cat-e1-1', text: '눈이 번뜩이며 즉시 사냥 모드 돌입!', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-e1-1', text: '눈이 번뜩이며 즉시 사냥 모드로 돌입해요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, dominance: 0 } },
       { id: 'cat-e1-2', text: '관심을 보이며 슬슬 다가와요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, dominance: 0 } },
       { id: 'cat-e1-3', text: '누운 자세로 앞발만 휘적거려요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, dominance: 0 } },
       { id: 'cat-e1-4', text: '눈길 한번 주고 다시 잠자요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, dominance: 0 } },
     ],
   },
   {
-    id: 'cat-energy-2', petCategory: 'cat', questionText: '새벽 시간, 우리 고양이는 보통?', questionType: 'choice', axis: 'extraversion', orderIndex: 2,
-    choices: [
-      { id: 'cat-e2-1', text: '운동회 시작! 집안을 미친 듯이 뛰어다녀요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-e2-2', text: '이것저것 만지고 탐색하며 돌아다녀요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-e2-3', text: '가끔 움직이지만 대부분 조용해요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-e2-4', text: '보호자와 함께 꿀잠 자요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, dominance: 0 } },
-    ],
-  },
-  {
-    id: 'cat-energy-3', petCategory: 'cat', questionText: '하루 중 우리 고양이의 활동량은?', questionType: 'choice', axis: 'extraversion', orderIndex: 3,
-    choices: [
-      { id: 'cat-e3-1', text: '쉬는 시간보다 뛰어다니는 시간이 많아요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-e3-2', text: '활동과 휴식이 반반이에요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-e3-3', text: '대부분 쉬고 가끔 움직여요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-e3-4', text: '하루 종일 자는 게 일상이에요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, dominance: 0 } },
-    ],
-  },
-  {
-    id: 'cat-social-1', petCategory: 'cat', questionText: '처음 보는 사람이 집에 오면?', questionType: 'choice', axis: 'amicability', orderIndex: 4,
+    id: 'cat-social-1', petCategory: 'cat', questionText: '처음 보는 사람이 집에 오면?', questionType: 'choice', axis: 'amicability', orderIndex: 2,
     choices: [
       { id: 'cat-s1-1', text: '먼저 다가가서 냄새 맡고 비벼요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, dominance: 0 } },
       { id: 'cat-s1-2', text: '호기심을 보이며 가까이 와서 관찰해요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, dominance: 0 } },
@@ -226,52 +211,16 @@ export const CAT_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'cat-social-2', petCategory: 'cat', questionText: '보호자가 소파에 앉아 있으면?', questionType: 'choice', axis: 'amicability', orderIndex: 5,
+    id: 'cat-sensitivity-1', petCategory: 'cat', questionText: '청소기를 돌리면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 3,
     choices: [
-      { id: 'cat-s2-1', text: '바로 무릎 위로 올라와 자리 잡아요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-s2-2', text: '옆자리에 와서 나란히 앉아요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-s2-3', text: '같은 방에는 있지만 좀 떨어져 있어요', axisWeights: { extraversion: 0, amicability: -1, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-s2-4', text: '다른 방에서 혼자만의 시간을 보내요', axisWeights: { extraversion: 0, amicability: -2, neuroticism: 0, dominance: 0 } },
-    ],
-  },
-  {
-    id: 'cat-social-3', petCategory: 'cat', questionText: '보호자가 화상통화나 영상을 보고 있으면?', questionType: 'choice', axis: 'amicability', orderIndex: 6,
-    choices: [
-      { id: 'cat-s3-1', text: '화면 앞에 떡하니 앉아서 같이 봐요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-s3-2', text: '옆에 와서 관심을 가져요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-s3-3', text: '한번 쳐다보고 자기 할 일 해요', axisWeights: { extraversion: 0, amicability: -1, neuroticism: 0, dominance: 0 } },
-      { id: 'cat-s3-4', text: '전혀 관심 없어요', axisWeights: { extraversion: 0, amicability: -2, neuroticism: 0, dominance: 0 } },
-    ],
-  },
-  {
-    id: 'cat-sensitivity-1', petCategory: 'cat', questionText: '청소기를 돌리면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 7,
-    choices: [
-      { id: 'cat-d1-1', text: '순간이동 하듯 침대 밑으로 사라져요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 2, dominance: 0 } },
+      { id: 'cat-d1-1', text: '침대 밑으로 숨어요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 2, dominance: 0 } },
       { id: 'cat-d1-2', text: '경계하며 높은 곳으로 올라가요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 1, dominance: 0 } },
       { id: 'cat-d1-3', text: '잠깐 쳐다보다가 신경 꺼요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -1, dominance: 0 } },
       { id: 'cat-d1-4', text: '바로 옆에서도 꿈쩍 안 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -2, dominance: 0 } },
     ],
   },
   {
-    id: 'cat-sensitivity-2', petCategory: 'cat', questionText: '보호자가 울거나 슬퍼하면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 8,
-    choices: [
-      { id: 'cat-d2-1', text: '옆에 와서 꾹꾹이를 하거나 얼굴을 비벼요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 2, dominance: 0 } },
-      { id: 'cat-d2-2', text: '평소와 다르게 가까이 와서 있어요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 1, dominance: 0 } },
-      { id: 'cat-d2-3', text: '평소와 별 차이 없는 것 같아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -1, dominance: 0 } },
-      { id: 'cat-d2-4', text: '전혀 반응 없이 자기 세계에 빠져 있어요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -2, dominance: 0 } },
-    ],
-  },
-  {
-    id: 'cat-sensitivity-3', petCategory: 'cat', questionText: '새로운 향(방향제, 향수 등)이 집에 생기면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 9,
-    choices: [
-      { id: 'cat-d3-1', text: '플레멘 반응하며 한참 킁킁거려요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 2, dominance: 0 } },
-      { id: 'cat-d3-2', text: '냄새 나는 쪽을 확인하러 가요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 1, dominance: 0 } },
-      { id: 'cat-d3-3', text: '잠깐 냄새 맡고 신경 안 써요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -1, dominance: 0 } },
-      { id: 'cat-d3-4', text: '전혀 반응 없어요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -2, dominance: 0 } },
-    ],
-  },
-  {
-    id: 'cat-curiosity-1', petCategory: 'cat', questionText: '택배 상자가 도착하면?', questionType: 'choice', axis: 'dominance', orderIndex: 10,
+    id: 'cat-curiosity-1', petCategory: 'cat', questionText: '택배 상자가 도착하면?', questionType: 'choice', axis: 'dominance', orderIndex: 4,
     choices: [
       { id: 'cat-c1-1', text: '뜯기도 전에 상자 위에 올라타요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: 2 } },
       { id: 'cat-c1-2', text: '열면 바로 안으로 들어가 탐색해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: 1 } },
@@ -280,18 +229,72 @@ export const CAT_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'cat-curiosity-2', petCategory: 'cat', questionText: '창문 밖에 새가 나타나면?', questionType: 'choice', axis: 'dominance', orderIndex: 11,
+    id: 'cat-energy-2', petCategory: 'cat', questionText: '하루 중 우리 고양이의 활동량은?', questionType: 'choice', axis: 'extraversion', orderIndex: 5,
     choices: [
-      { id: 'cat-c2-1', text: '캐캐캐 소리 내며 사냥 자세를 취해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: 2 } },
+      { id: 'cat-e2-1', text: '쉬는 시간보다 뛰어다니는 시간이 많아요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-e2-2', text: '활동과 휴식이 반반이에요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-e2-3', text: '대부분 쉬고 가끔 움직여요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-e2-4', text: '하루 종일 자는 게 일상이에요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, dominance: 0 } },
+    ],
+  },
+  {
+    id: 'cat-social-2', petCategory: 'cat', questionText: '보호자가 소파에 앉아 있으면?', questionType: 'choice', axis: 'amicability', orderIndex: 6,
+    choices: [
+      { id: 'cat-s2-1', text: '바로 무릎 위로 올라와 자리 잡아요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-s2-2', text: '옆자리에 와서 나란히 앉아요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-s2-3', text: '같은 방에는 있지만 좀 떨어져 있어요', axisWeights: { extraversion: 0, amicability: -1, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-s2-4', text: '다른 방에서 혼자만의 시간을 보내요', axisWeights: { extraversion: 0, amicability: -2, neuroticism: 0, dominance: 0 } },
+    ],
+  },
+  {
+    id: 'cat-sensitivity-2', petCategory: 'cat', questionText: '갑자기 물건이 떨어지거나 큰 소리가 나면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 7,
+    choices: [
+      { id: 'cat-d2-1', text: '놀라서 숨고 한참 동안 안 나와요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 2, dominance: 0 } },
+      { id: 'cat-d2-2', text: '움찔하고 경계 자세를 취해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 1, dominance: 0 } },
+      { id: 'cat-d2-3', text: '잠깐 쳐다보고 금방 원래대로 돌아와요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -1, dominance: 0 } },
+      { id: 'cat-d2-4', text: '전혀 반응하지 않아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -2, dominance: 0 } },
+    ],
+  },
+  {
+    id: 'cat-curiosity-2', petCategory: 'cat', questionText: '창문 밖에 새가 나타나면?', questionType: 'choice', axis: 'dominance', orderIndex: 8,
+    choices: [
+      { id: 'cat-c2-1', text: '소리 내며 사냥 자세를 취해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: 2 } },
       { id: 'cat-c2-2', text: '창가에 가서 집중해서 관찰해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: 1 } },
       { id: 'cat-c2-3', text: '잠깐 쳐다보다 관심을 끊어요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: -1 } },
       { id: 'cat-c2-4', text: '창밖에 뭐가 있든 신경 안 써요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: -2 } },
     ],
   },
   {
+    id: 'cat-energy-3', petCategory: 'cat', questionText: '새벽이나 밤 시간에 우리 고양이는?', questionType: 'choice', axis: 'extraversion', orderIndex: 9,
+    choices: [
+      { id: 'cat-e3-1', text: '집안을 뛰어다니며 활발하게 움직여요', axisWeights: { extraversion: 2, amicability: 0, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-e3-2', text: '이것저것 만지고 탐색하며 돌아다녀요', axisWeights: { extraversion: 1, amicability: 0, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-e3-3', text: '가끔 움직이지만 대부분 조용해요', axisWeights: { extraversion: -1, amicability: 0, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-e3-4', text: '보호자와 함께 자고 있어요', axisWeights: { extraversion: -2, amicability: 0, neuroticism: 0, dominance: 0 } },
+    ],
+  },
+  {
+    id: 'cat-social-3', petCategory: 'cat', questionText: '보호자가 화상통화나 영상을 보고 있으면?', questionType: 'choice', axis: 'amicability', orderIndex: 10,
+    choices: [
+      { id: 'cat-s3-1', text: '화면 앞에 앉아서 같이 봐요', axisWeights: { extraversion: 0, amicability: 2, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-s3-2', text: '옆에 와서 관심을 가져요', axisWeights: { extraversion: 0, amicability: 1, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-s3-3', text: '한번 쳐다보고 자기 할 일 해요', axisWeights: { extraversion: 0, amicability: -1, neuroticism: 0, dominance: 0 } },
+      { id: 'cat-s3-4', text: '전혀 관심 없어요', axisWeights: { extraversion: 0, amicability: -2, neuroticism: 0, dominance: 0 } },
+    ],
+  },
+  {
+    id: 'cat-sensitivity-3', petCategory: 'cat', questionText: '집 안 가구 배치를 바꾸면?', questionType: 'choice', axis: 'neuroticism', orderIndex: 11,
+    choices: [
+      { id: 'cat-d3-1', text: '불안해하며 한참 동안 적응을 못 해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 2, dominance: 0 } },
+      { id: 'cat-d3-2', text: '조심스럽게 돌아다니며 확인해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 1, dominance: 0 } },
+      { id: 'cat-d3-3', text: '잠깐 둘러보고 금방 적응해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -1, dominance: 0 } },
+      { id: 'cat-d3-4', text: '아무 반응 없어요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: -2, dominance: 0 } },
+    ],
+  },
+  {
     id: 'cat-curiosity-3', petCategory: 'cat', questionText: '평소 안 열어주던 방문을 열어주면?', questionType: 'choice', axis: 'dominance', orderIndex: 12,
     choices: [
-      { id: 'cat-c3-1', text: '번개같이 들어가서 구석구석 탐험해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: 2 } },
+      { id: 'cat-c3-1', text: '바로 들어가서 구석구석 탐험해요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: 2 } },
       { id: 'cat-c3-2', text: '조심스럽게 들어가서 냄새를 맡아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: 1 } },
       { id: 'cat-c3-3', text: '문 앞에서 잠깐 보고 말아요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: -1 } },
       { id: 'cat-c3-4', text: '열려 있어도 안 들어가요', axisWeights: { extraversion: 0, amicability: 0, neuroticism: 0, dominance: -2 } },
