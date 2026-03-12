@@ -101,8 +101,8 @@ export default function AboutPage() {
             <h2 className="text-lg font-bold text-[#1A1A1A] mb-3">문의</h2>
             <p>서비스 관련 문의, 피드백, 또는 데이터 삭제 요청은 아래 이메일로 연락해주세요.</p>
             <p className="mt-2">
-              <a href="mailto:tailpsych.help@gmail.com" className="text-[#C4824E] font-bold">
-                tailpsych.help@gmail.com
+              <a href="mailto:phb007298@gmail.com" className="text-[#C4824E] font-bold">
+                phb007298@gmail.com
               </a>
             </p>
           </section>

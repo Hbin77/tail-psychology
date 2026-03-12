@@ -71,7 +71,7 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-bold text-[#1A1A1A] mb-2">7. 개인정보 보호 책임자</h2>
             <ul className="list-none flex flex-col gap-1">
               <li>서비스명: 꼬리심리학</li>
-              <li>이메일: tailpsych.help@gmail.com</li>
+              <li>이메일: phb007298@gmail.com</li>
             </ul>
           </section>
 
