@@ -164,11 +164,8 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
             ))}
           </div>
 
-          {/* Spacer to push watermark to bottom */}
-          <div style={{ flex: 1 }} />
-
           {/* Watermark */}
-          <div style={{ fontSize: 24, color: '#9CA3AF', textAlign: 'center' }}>
+          <div style={{ fontSize: 24, color: '#9CA3AF', textAlign: 'center', marginTop: 60 }}>
             {isDog ? '강아지' : '고양이'} 성격 유형 검사
           </div>
           <div style={{ fontSize: 22, color: '#D1D5DB', marginTop: 8 }}>
