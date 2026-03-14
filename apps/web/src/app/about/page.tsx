@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import GoogleAdSense from '@/components/GoogleAdSense';
 
 export const metadata: Metadata = {
   title: '꼬리심리학 소개 | 반려동물 성격 유형 검사',
@@ -106,6 +107,13 @@ export default function AboutPage() {
               </a>
             </p>
           </section>
+
+          {/* 구글 애드센스 - 콘텐츠 페이지에 배치 */}
+          {process.env.NEXT_PUBLIC_ADSENSE_SLOT_ABOUT && (
+            <section>
+              <GoogleAdSense adSlot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ABOUT} />
+            </section>
+          )}
 
           <section className="border-t border-gray-200 pt-6">
             <p className="text-xs text-[#9CA3AF]">

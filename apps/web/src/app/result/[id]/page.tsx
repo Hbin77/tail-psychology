@@ -8,7 +8,6 @@ import { DOG_TYPES, CAT_TYPES } from '@/data/questions';
 import { Share2, PawPrint, Heart, Loader2 } from 'lucide-react';
 import AdBanner from '@/components/AdBanner';
 import KakaoAdFit from '@/components/KakaoAdFit';
-import GoogleAdSense from '@/components/GoogleAdSense';
 import ResultCard from '@/components/ResultCard';
 import ShareSheet from '@/components/ShareSheet';
 import { useCardImage } from '@/hooks/useCardImage';
@@ -229,13 +228,6 @@ export default function ResultPage() {
         {process.env.NEXT_PUBLIC_KAKAO_ADFIT_UNIT_ID && (
           <motion.div variants={fadeUp} className="w-full flex justify-center">
             <KakaoAdFit unitId={process.env.NEXT_PUBLIC_KAKAO_ADFIT_UNIT_ID} />
-          </motion.div>
-        )}
-
-        {/* 구글 애드센스 */}
-        {process.env.NEXT_PUBLIC_ADSENSE_SLOT_RESULT && (
-          <motion.div variants={fadeUp} className="w-full">
-            <GoogleAdSense adSlot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_RESULT} />
           </motion.div>
         )}
 

@@ -76,6 +76,8 @@ export default function LandingPage() {
         >
           <Link href="/about" className="hover:text-[#6B7280] transition-colors">소개</Link>
           <span>|</span>
+          <Link href="/types" className="hover:text-[#6B7280] transition-colors">유형 도감</Link>
+          <span>|</span>
           <Link href="/privacy" className="hover:text-[#6B7280] transition-colors">개인정보처리방침</Link>
           <span>|</span>
           <Link href="/terms" className="hover:text-[#6B7280] transition-colors">이용약관</Link>
