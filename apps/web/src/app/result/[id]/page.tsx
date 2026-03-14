@@ -98,7 +98,31 @@ export default function ResultPage() {
           axis_scores: data.axis_scores,
         });
       } catch {
-        setResult(null);
+        // 데모/오프라인 토큰인 경우 로컬 데이터로 fallback
+        if (shareToken.startsWith('demo-')) {
+          const types = [...DOG_TYPES, ...CAT_TYPES];
+          const randomType = types[Math.floor(Math.random() * types.length)];
+          const isCat = randomType.category === 'cat';
+          setResult({
+            pet_name: '우리 아이',
+            pet_category: randomType.category,
+            type_code: randomType.code,
+            character_name: randomType.characterName,
+            ai_description: randomType.description,
+            ai_compatibility: '',
+            compatible_type: randomType.compatibleType,
+            axis_scores: {
+              extraversion: Math.random() * 2 - 1,
+              amicability: Math.random() * 2 - 1,
+              neuroticism: Math.random() * 2 - 1,
+              ...(isCat
+                ? { dominance: Math.random() * 2 - 1 }
+                : { trainability: Math.random() * 2 - 1 }),
+            },
+          });
+        } else {
+          setResult(null);
+        }
       } finally {
         setLoading(false);
       }
