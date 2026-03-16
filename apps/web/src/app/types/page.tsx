@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { DOG_TYPES, CAT_TYPES } from '@/data/questions';
 import GoogleAdSense from '@/components/GoogleAdSense';
+import KakaoAdFit from '@/components/KakaoAdFit';
 
 export const metadata: Metadata = {
   title: '성격 유형 도감 | 꼬리심리학',
@@ -100,6 +101,11 @@ export default function TypesPage() {
         </section>
 
         {/* 광고 - 콘텐츠 사이 자연스럽게 배치 */}
+        {process.env.NEXT_PUBLIC_KAKAO_ADFIT_UNIT_ID && (
+          <div className="my-8 flex justify-center">
+            <KakaoAdFit unitId={process.env.NEXT_PUBLIC_KAKAO_ADFIT_UNIT_ID} />
+          </div>
+        )}
         {process.env.NEXT_PUBLIC_ADSENSE_SLOT_TYPES && (
           <div className="my-8">
             <GoogleAdSense adSlot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_TYPES} />

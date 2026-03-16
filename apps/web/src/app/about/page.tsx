@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import GoogleAdSense from '@/components/GoogleAdSense';
+import KakaoAdFit from '@/components/KakaoAdFit';
 
 export const metadata: Metadata = {
   title: '꼬리심리학 소개 | 반려동물 성격 유형 검사',
@@ -108,7 +109,12 @@ export default function AboutPage() {
             </p>
           </section>
 
-          {/* 구글 애드센스 - 콘텐츠 페이지에 배치 */}
+          {/* 광고 */}
+          {process.env.NEXT_PUBLIC_KAKAO_ADFIT_UNIT_ID && (
+            <section className="flex justify-center">
+              <KakaoAdFit unitId={process.env.NEXT_PUBLIC_KAKAO_ADFIT_UNIT_ID} />
+            </section>
+          )}
           {process.env.NEXT_PUBLIC_ADSENSE_SLOT_ABOUT && (
             <section>
               <GoogleAdSense adSlot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ABOUT} />
