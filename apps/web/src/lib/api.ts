@@ -16,12 +16,6 @@ export async function createSession(petCategory: string, petName: string, petBre
   return res.json();
 }
 
-export async function getQuestions(petCategory: string) {
-  const res = await fetch(`${API_BASE}/api/v1/questions/${petCategory}`);
-  if (!res.ok) throw new Error('Failed to get questions');
-  return res.json();
-}
-
 export async function submitResponses(sessionId: string, responses: { question_id: string; choice_id?: string; free_text?: string }[]) {
   validateId(sessionId, 'sessionId');
   const res = await fetch(`${API_BASE}/api/v1/sessions/${sessionId}/responses`, {

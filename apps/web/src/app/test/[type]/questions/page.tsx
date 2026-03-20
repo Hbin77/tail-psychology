@@ -14,7 +14,11 @@ import { ChevronLeft, Send, PenLine, Check } from 'lucide-react';
 export default function QuestionsPage() {
   const router = useRouter();
   const params = useParams();
-  const type = params.type as 'dog' | 'cat';
+  const type = params.type as string;
+  if (type !== 'dog' && type !== 'cat') {
+    router.replace('/select');
+    return null;
+  }
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [submitting, setSubmitting] = useState(false);
@@ -39,11 +43,11 @@ export default function QuestionsPage() {
     setFreeText(questionId, '');
     setCustomInputOpen((prev) => ({ ...prev, [questionId]: false }));
     setTimeout(() => {
-      if (swiperRef.current && activeIndex < totalQuestions - 1) {
+      if (swiperRef.current && swiperRef.current.activeIndex < totalQuestions - 1) {
         swiperRef.current.slideNext();
       }
     }, 500);
-  }, [setAnswer, setFreeText, activeIndex, totalQuestions]);
+  }, [setAnswer, setFreeText, totalQuestions]);
 
   const handleCustomInputToggle = useCallback((questionId: string) => {
     setCustomInputOpen((prev) => ({ ...prev, [questionId]: !prev[questionId] }));
@@ -55,12 +59,12 @@ export default function QuestionsPage() {
     const text = freeTextAnswers[questionId];
     if (text && text.trim()) {
       setTimeout(() => {
-        if (swiperRef.current && activeIndex < totalQuestions - 1) {
+        if (swiperRef.current && swiperRef.current.activeIndex < totalQuestions - 1) {
           swiperRef.current.slideNext();
         }
       }, 300);
     }
-  }, [freeTextAnswers, activeIndex, totalQuestions]);
+  }, [freeTextAnswers, totalQuestions]);
 
   const handleSubmit = async () => {
     if (submitting) return;

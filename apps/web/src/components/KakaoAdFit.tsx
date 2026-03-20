@@ -33,6 +33,13 @@ export default function KakaoAdFit({ unitId, width = 320, height = 50 }: KakaoAd
     script.src = 'https://t1.daumcdn.net/kas/static/ba.min.js';
 
     containerRef.current.appendChild(script);
+
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.innerHTML = '';
+      }
+      initialized.current = false;
+    };
   }, [unitId, width, height]);
 
   if (!unitId) return null;

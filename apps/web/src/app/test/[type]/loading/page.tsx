@@ -16,27 +16,33 @@ export default function LoadingPage() {
   const router = useRouter();
   const params = useParams();
   const type = params.type as string;
+  if (type !== 'dog' && type !== 'cat') {
+    router.replace('/select');
+    return null;
+  }
   const { shareToken } = useTestStore();
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
   const isDog = type === 'dog';
 
   useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = [];
+
     steps.forEach((step, idx) => {
-      setTimeout(() => {
+      timers.push(setTimeout(() => {
         setCompletedSteps((prev) => [...prev, idx]);
-      }, step.delay);
+      }, step.delay));
     });
 
-    const timer = setTimeout(() => {
+    timers.push(setTimeout(() => {
       if (shareToken) {
         router.replace(`/result/${shareToken}`);
       } else {
         router.replace('/');
       }
-    }, 3500);
+    }, 3500));
 
-    return () => clearTimeout(timer);
+    return () => timers.forEach(clearTimeout);
   }, [router, shareToken]);
 
   return (

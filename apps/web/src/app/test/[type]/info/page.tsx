@@ -30,7 +30,11 @@ const CAT_BREEDS = [
 export default function InfoPage() {
   const router = useRouter();
   const params = useParams();
-  const type = params.type as 'dog' | 'cat';
+  const type = params.type as string;
+  if (type !== 'dog' && type !== 'cat') {
+    router.replace('/select');
+    return null;
+  }
   const { setPetName, setPetBreed, setSessionId } = useTestStore();
   const [name, setName] = useState('');
   const [breed, setBreed] = useState('');
