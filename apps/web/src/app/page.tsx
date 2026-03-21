@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { PawPrint, ArrowRight } from 'lucide-react';
+import KakaoAdFit from '@/components/KakaoAdFit';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -67,6 +68,17 @@ export default function LandingPage() {
         >
           C-BARQ, Feline Five 등 동물행동학 연구 기반
         </motion.p>
+
+        {process.env.NEXT_PUBLIC_KAKAO_ADFIT_UNIT_ID && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.4 }}
+            className="w-full flex justify-center mt-2"
+          >
+            <KakaoAdFit unitId={process.env.NEXT_PUBLIC_KAKAO_ADFIT_UNIT_ID} />
+          </motion.div>
+        )}
 
         <motion.div
           initial={{ opacity: 0 }}
